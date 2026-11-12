@@ -1,6 +1,6 @@
 # FINT
 
-Ukrainian letters for any font. Version 0.4.
+Ukrainian letters for any font. Version 0.5.
 
 Many fonts ship with Russian Cyrillic and stop there: no Ґ, Є, І, Ї. FINT opens a `.ttf` or `.otf`, builds the
 missing letters from the font's own parts and writes them back into the same file.
@@ -15,7 +15,7 @@ missing letters from the font's own parts and writes them back into the same fil
 - **І** is the Latin I.
 - The apostrophe ʼ comes from the font's own quote.
 - Kerning, OpenType features and the slant stay in place: the letters are inserted into the source file, the font is not rebuilt.
-- Before and after, side by side, on real Ukrainian text at three sizes.
+- Real Ukrainian text in seven blocks: every letter FINT added sits on a grey mark, and the letters themselves are shown first, large, above the whole alphabet.
 
 A font with no Cyrillic at all gets a whole Cyrillic set, built from its Latin. Look through the letters before you use
 the font: this part is younger than the Ukrainian one. Add `?scope=all` to the address to see the demo font rebuilt this way.
@@ -28,6 +28,8 @@ the font: this part is younger than the Ukrainian one. Add `?scope=all` to the a
 - **Ґ upturn:** low, regular or tall.
 - **Name suffix:** what is added to the family name of the saved font, `UA` by default.
 - **View:** before, after and, in the demo, the designer's original; new letters marked or clean.
+
+Settings sit below the letters, folded: the page opens with the result, not with choices.
 
 ## Privacy
 

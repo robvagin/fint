@@ -159,21 +159,40 @@ body.fint [data-act="pick"] { display: none; }
 .gc .nm { display: flex; justify-content: space-between; gap: 4px; padding: 8px 10px 9px; font: 11px/1 var(--mono); color: #7c7b76; background: #ecebe6; }
 .gc .nm b { font: 600 12px/1 var(--ui); color: var(--ink); }
 .gc.new .nm { background: #1a1a1a; color: #b9b8b2; } .gc.new .nm b { color: #f6f5f2; }
-.gc.new.mid .nm { background: #6f6e69; color: #d9d8d2; }
-.gc.new.low .nm, .gc.new.none .nm { background: #b9b8b2; color: #3d3c39; } .gc.new.low .nm b, .gc.new.none .nm b { color: #1a1a1a; }
+
 .gc.out .nm { background: repeating-linear-gradient(135deg, #d9d8d2 0 5px, #ecebe6 5px 10px); }
 .gc[aria-current="true"] { box-shadow: inset 0 0 0 2px var(--ink); position: relative; z-index: 1; }
 .gc:active { transform: none; }
 @media (hover: hover) { .gc:hover { background: #fff; box-shadow: inset 0 0 0 1px var(--ink); position: relative; z-index: 1; } }
-.show.hl:not(.allnew) .gc:not(.new) svg path { fill: #a6a59f; }
+.show:not(.allnew) .gg:not(.add) .gc:not(.new) svg path { fill: #b4b3ad; }
 .show.was .gc.new svg path { fill: none; stroke: #cfccc4; stroke-width: 1.5px; vector-effect: non-scaling-stroke; stroke-dasharray: 4 4; }
 .show .t { font-family: FrankDraft, var(--ui); overflow-wrap: anywhere; }
 .show .wait { font-family: var(--ui); opacity: 0.5; }
 .show.orig .t { font-family: FrankOrig, var(--ui); }
 .show u { text-decoration: none; }
-.show.hl .ex u { text-decoration: underline; text-decoration-color: var(--hot); text-decoration-thickness: max(2px, 0.045em); text-underline-offset: 0.17em; text-decoration-skip-ink: none; }
-.show.hl .ex u { text-decoration-color: currentColor; }
-.show.hl .ex u.eye { text-decoration: none; background: rgba(128, 127, 122, 0.3); border-radius: 2px; }
+
+.show.hl u { --mk: rgba(26, 26, 26, 0.14); padding: 0 0.05em; margin: 0 -0.05em; background: linear-gradient(var(--mk), var(--mk)) 0 18% / 100% 1.1em no-repeat; border-radius: 0.06em; }
+.show.hl .ex.c u, .show.hl .ex.e u, .show.hl .chips span:nth-child(3n+1) u { --mk: rgba(246, 245, 242, 0.26); }
+.leg { display: none; align-items: center; gap: 14px; margin: 0; font-size: var(--t14); color: var(--muted); }
+.show.hl .leg, .show.was .leg { display: flex; } .show .leg:empty { display: none; }
+.leg .t { font-size: 26px; line-height: 1; color: var(--ink); }
+.show.was .leg u { box-shadow: inset 0 0 0 1.5px #a8a49b; }
+
+.setd { margin-top: 40px; }
+.setd summary { display: inline-flex; align-items: center; gap: 10px; list-style: none; cursor: pointer; font: 550 var(--t14)/1 var(--ui); padding: 11px 16px; border-radius: var(--r); box-shadow: inset 0 0 0 1px var(--line); }
+.setd summary::-webkit-details-marker { display: none; }
+.setd summary::after { content: ''; width: 6px; height: 6px; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: translateY(-2px) rotate(45deg); transition: transform .3s ease; }
+.setd[open] summary::after { transform: translateY(1px) rotate(-135deg); }
+@media (hover: hover) { .setd summary:hover { background: var(--tint); } }
+.setd .sets { margin: 16px 0 0; }
+
+.fv-sub { font: 550 11px/1 var(--ui); letter-spacing: 0.08em; text-transform: uppercase; color: #7c7b76; padding: 0 4px; }
+.fv-sub:empty { display: none; }
+.addw { display: flex; flex-direction: column; gap: 12px; }
+.addw[hidden] { display: none; }
+.gg.add { display: flex; flex-wrap: wrap; width: fit-content; max-width: 100%; }
+.gg.add .gc { width: 124px; }
+.gc .nm i.w { font: 650 9px/12px var(--ui); letter-spacing: 0.07em; text-transform: uppercase; color: #f6f5f2; }
 
 .show.was u, .show.was u.eye { color: transparent !important; text-decoration: none !important; background: none !important; box-shadow: inset 0 0 0 max(1.5px, 0.035em) currentColor; border-radius: 0.06em; }
 .show.was .ex.a u { box-shadow: inset 0 0 0 max(1.5px, 0.035em) #a8a49b; }
@@ -250,7 +269,7 @@ body.drop { outline: none; } body.drop .dropz { background: var(--teal-soft); bo
 .insp .recipe { font-weight: 550; } .insp .parts { gap: 6px; }
 .insp .vars { grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); }
 .insp .hint { font-size: var(--t12); color: var(--muted); margin: 0; line-height: 1.45; }
-@media (max-width: 760px) { body.fint .wrap { padding: 0 16px 56px; } .fv { padding: 14px 12px 16px; } .gg { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); } .gc svg { padding: 8px 6px 2px; } .gc .nm { padding: 5px 6px 6px; } .gc .nm i { display: none; } .ex { padding: 22px 20px 26px; } .q-cells { grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 6px; } .q-sub { margin-top: 48px; } }
+@media (max-width: 760px) { .gg.add .gc { width: 84px; } .leg .t { font-size: 20px; } body.fint .wrap { padding: 0 16px 56px; } .fv { padding: 14px 12px 16px; } .gg { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); } .gc svg { padding: 8px 6px 2px; } .gc .nm { padding: 5px 6px 6px; } .gc .nm i:not(.w) { display: none; } .gc .nm i.w { font-size: 8px; letter-spacing: 0.04em; } .ex { padding: 22px 20px 26px; } .q-cells { grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 6px; } .q-sub { margin-top: 48px; } }
 @media (prefers-reduced-motion: reduce) { .drawer, .scrim { transition: none; } }
 @media (max-width: 600px) {
   .wrap { padding: 20px 16px 60px; } .intro { padding: 24px; }
@@ -290,15 +309,8 @@ body.drop { outline: none; } body.drop .dropz { background: var(--teal-soft); bo
     <button class="dropz" data-act="open"><b data-t="dropB"></b><span data-t="dropS"></span></button>
   </section>
   <section id="quick" hidden style="margin-top:0">
-    <div class="sets" id="sets">
-      <div class="g"><span data-t="setScope">Строить</span><span class="seg"><button data-set="scope" data-v="missing" aria-pressed="true" data-t="scMiss">только недостающее</button><button data-set="scope" data-v="all" aria-pressed="false" data-t="scAll">всю кириллицу</button></span></div>
-      <div class="g"><span>Ё Ъ Ы Э</span><span class="seg"><button data-set="ru" data-v="1" aria-pressed="true" data-t="ruOn">добавлять</button><button data-set="ru" data-v="0" aria-pressed="false" data-t="ruOff">нет</button></span></div>
-      <div class="g"><span data-t="setDots">Точки Ї</span><span class="seg"><button data-set="dots" data-v="ua" aria-pressed="true" data-t="dUa">ближе</button><button data-set="dots" data-v="lat" aria-pressed="false" data-t="dLat">как в латинице</button></span></div>
-      <div class="g"><span data-t="setUp">Усик Ґ</span><span class="seg"><button data-set="up" data-v="low" aria-pressed="false" data-t="uLow">ниже</button><button data-set="up" data-v="mid" aria-pressed="true" data-t="uMid">обычный</button><button data-set="up" data-v="high" aria-pressed="false" data-t="uHigh">выше</button></span></div>
-      <div class="g"><span data-t="setName">Добавка к имени</span><input id="setSuffix" value="UA" maxlength="12" spellcheck="false" aria-label="suffix"></div>
-      <div class="g sp"><span data-t="setView">Показ</span><div class="row"><span class="seg" aria-label="было и стало"><button data-qwas="1" aria-pressed="false" data-t="was">было</button><button data-qwas="0" aria-pressed="true" data-t="now">стало</button><button data-qwas="2" aria-pressed="false" id="qOrig" hidden data-t="orig">оригинал автора</button></span><span class="seg" aria-label="новые буквы"><button data-qhl="1" aria-pressed="true" id="qhlOn">новое выделено</button><button data-qhl="0" aria-pressed="false" data-t="clean">чисто</button></span></div></div>
-    </div>
     <div class="show hl" id="stage">
+      <p class="leg" id="qLeg"></p>
       <div class="exs">
         <article class="ex p"><span class="lab" data-t="exP">Панграмма</span><div class="t pg" id="qPang"></div></article>
         <article class="ex a"><span class="lab" data-t="exA">Статья</span><div class="t hd" id="qLine" contenteditable="plaintext-only" spellcheck="false" aria-label="заголовок, можно править"></div><div class="t bd" id="qBody"></div></article>
@@ -310,9 +322,21 @@ body.drop { outline: none; } body.drop .dropz { background: var(--teal-soft); bo
       </div>
       <div class="fv">
         <div class="fv-top"><h1 id="qTitle"></h1><span class="cnt" id="qCount"></span></div>
+        <div class="addw" id="qAddW"><div class="fv-sub" id="qAddT"></div><div class="gg add" id="qAdd"></div></div>
+        <div class="fv-sub" id="qAllT"></div>
         <div class="gg" id="qGrid"></div>
       </div>
     </div>
+    <details class="setd" id="setd"><summary data-t="setOpen">Настройки</summary>
+    <div class="sets" id="sets">
+      <div class="g"><span data-t="setScope">Строить</span><span class="seg"><button data-set="scope" data-v="missing" aria-pressed="true" data-t="scMiss">только недостающее</button><button data-set="scope" data-v="all" aria-pressed="false" data-t="scAll">всю кириллицу</button></span></div>
+      <div class="g"><span>Ё Ъ Ы Э</span><span class="seg"><button data-set="ru" data-v="1" aria-pressed="true" data-t="ruOn">добавлять</button><button data-set="ru" data-v="0" aria-pressed="false" data-t="ruOff">нет</button></span></div>
+      <div class="g"><span data-t="setDots">Точки Ї</span><span class="seg"><button data-set="dots" data-v="ua" aria-pressed="true" data-t="dUa">ближе</button><button data-set="dots" data-v="lat" aria-pressed="false" data-t="dLat">как в латинице</button></span></div>
+      <div class="g"><span data-t="setUp">Усик Ґ</span><span class="seg"><button data-set="up" data-v="low" aria-pressed="false" data-t="uLow">ниже</button><button data-set="up" data-v="mid" aria-pressed="true" data-t="uMid">обычный</button><button data-set="up" data-v="high" aria-pressed="false" data-t="uHigh">выше</button></span></div>
+      <div class="g"><span data-t="setName">Добавка к имени</span><input id="setSuffix" value="UA" maxlength="12" spellcheck="false" aria-label="suffix"></div>
+      <div class="g sp"><span data-t="setView">Показ</span><div class="row"><span class="seg" aria-label="было и стало"><button data-qwas="1" aria-pressed="false" data-t="was">было</button><button data-qwas="0" aria-pressed="true" data-t="now">стало</button><button data-qwas="2" aria-pressed="false" id="qOrig" hidden data-t="orig">оригинал автора</button></span><span class="seg" aria-label="новые буквы"><button data-qhl="1" aria-pressed="true" id="qhlOn">новое выделено</button><button data-qhl="0" aria-pressed="false" data-t="clean">чисто</button></span></div></div>
+    </div>
+    </details>
     <div hidden>    <div class="q-sub"><h2 id="qNewTitle">Новые буквы</h2><span class="legend"><span class="pill high" data-t="pHigh">готово</span><span class="pill mid" data-t="pMid">проверить стыки</span><span class="pill low" data-t="pLow">доводка руками</span></span></div>     <div class="q-cells" id="qCells"></div>     <div id="qAuxWrap" hidden><div class="q-sub"><h2 data-t="signs">Знаки</h2></div><div class="q-aux" id="qAux"></div></div> </div>
     <p class="q-note" id="qNote"></p>
     <p id="qLede" hidden></p>
@@ -2594,7 +2618,7 @@ const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAl
 const Fk = window.Frank, F = Fk.create(window.paper);
 const st = { font: null, res: null, mode: 'parts', filter: 'all', size: 56, hl: true, squint: false, face: null, file: '', pick: {}, open: null, pmode: 'none',
   brain: null, brainOn: false, th: null, res0: null, buf: null, exam: null, view: 'quick', qhl: true, saved: null, job: null, sample: 'Їжак і ґава їдуть до Європи', qsize: 104, sel: null, was: 0, hide: '', demo: false, lang: 'ru', web: false, set: { scope: 'missing', ru: '1', dots: 'ua', up: 'mid', suffix: 'UA' } };
-const VERSION = '0.4';
+const VERSION = '0.5';
 const Br = window.Brain;
 const CONF = { own: 'есть в шрифте', copy: 'копия', high: 'почти готово', mid: 'проверить стыки', low: 'доводка руками', none: 'рисовать', drawn: 'нарисовано' };
 const WORK = new Set(['mid', 'low', 'none']);
@@ -2608,6 +2632,11 @@ const TX = {
   open: ['Открыть шрифт', 'Open a font', 'Відкрити шрифт'], save: ['Сохранить шрифт', 'Save font', 'Зберегти шрифт'],
   was: ['было', 'before', 'було'], now: ['стало', 'after', 'стало'], orig: ['оригинал автора', 'designer’s original', 'оригінал автора'],
   hlNew: ['новое выделено', 'new letters marked', 'нове виділено'], hlEye: ['на доводку подсвечено', 'needs a look', 'на доведення'], clean: ['чисто', 'clean', 'чисто'],
+  setOpen: ['Настройки', 'Settings', 'Налаштування'], tagNew: ['новая', 'new', 'нова'], tagChk: ['проверить', 'check', 'перевірити'],
+  legNew: ['так отмечены буквы, которые добавил FINT', 'marks the letters FINT added', 'так позначено літери, які додав FINT'],
+  legEye: ['так отмечены буквы, которые стоит проверить глазом', 'marks the letters worth a closer look', 'так позначено літери, які варто перевірити оком'],
+  legWas: ['этих букв в шрифте не было', 'these letters were missing from the font', 'цих літер у шрифті не було'],
+  addT: ['Добавлено FINT · %s', 'Added by FINT · %s', 'Додано FINT · %s'], allT: ['Весь алфавит', 'Whole alphabet', 'Уся абетка'],
   labText: ['Текст', 'Text', 'Текст'], labSign: ['Вывеска', 'Signage', 'Вивіска'], signs: ['Знаки', 'Signs', 'Знаки'], letter: ['Буква', 'Letter', 'Літера'],
   pHigh: ['готово', 'ready', 'готово'], pMid: ['проверить стыки', 'check the joins', 'перевірити стики'], pLow: ['доводка руками', 'needs hand work', 'доведення руками'],
   newN: ['Новые буквы: ', 'New letters: ', 'Нові літери: '], newNone: ['Новых букв нет', 'No new letters', 'Нових літер немає'],
@@ -2634,7 +2663,7 @@ const TX = {
   sDone: ['', 'Saved to your downloads: ', 'Збережено в завантаження: '], sDemo: ['', 'This is the demo font. Open your own font to save it', 'Це шрифт для прикладу. Відкрий свій, щоб зберегти'],
   sPlain: ['', 'The writer did not load, so the font was rebuilt the simple way: kerning and features of the source are not in this file', 'Записувач не завантажився, шрифт зібрано простим способом: кернінгу й підстановок джерела в цьому файлі немає'],
   sBad: ['', 'This file did not open as a font', 'Цей файл не відкрився як шрифт'],
-  foot1: ['', 'FINT ' + '0.4' + ' · MIT license', 'FINT ' + '0.4' + ' · ліцензія MIT'], foot2: ['', 'Demo font: Onest, SIL Open Font License', 'Шрифт для прикладу: Onest, SIL Open Font License'], foot3: ['', 'Source on GitHub', 'Код на GitHub'],
+  foot1: ['', 'FINT ' + VERSION + ' · MIT license', 'FINT ' + VERSION + ' · ліцензія MIT'], foot2: ['', 'Demo font: Onest, SIL Open Font License', 'Шрифт для прикладу: Onest, SIL Open Font License'], foot3: ['', 'Source on GitHub', 'Код на GitHub'],
 };
 const LANGS = ['ru', 'en', 'uk'];
 const T = (k, v) => { const row = TX[k]; const t = row ? row[LANGS.indexOf(st.lang)] || row[1] : k; return v === undefined ? t : t.replace('%s', v); };
@@ -2750,20 +2779,30 @@ function renderQSpec() {
   if (!st.res) return;
   const neu = new Set(st.res.letters.filter(l => l.layer !== 'own' && l.cmds.length).map(l => l.ch));
   const eye = new Set(st.res.letters.filter(l => l.layer !== 'own' && WORK.has(l.conf)).map(l => l.ch));
-  const mark = t => [...t].map(ch => st.hadCyr ? (neu.has(ch) ? `<u>${esc(ch)}</u>` : esc(ch)) : eye.has(ch) ? `<u class="eye">${esc(ch)}</u>` : esc(ch)).join('');
+  const mark = t => [...t].map(ch => (st.hadCyr ? neu.has(ch) : eye.has(ch)) ? `<u>${esc(ch)}</u>` : esc(ch)).join('');
   const line = $('#qLine'), stage = $('#stage');
   stage.classList.toggle('hl', st.qhl && st.was === 0); stage.classList.toggle('was', st.was === 1); stage.classList.toggle('orig', st.was === 2);
   stage.classList.toggle('allnew', !st.hadCyr);
   for (const el of stage.querySelectorAll('.t')) el.classList.toggle('wait', !st.face);
   if (document.activeElement !== line) line.innerHTML = mark(st.sample);
   const by = new Map(st.res.letters.map(l => [l.ch, l])), M = st.res.M, chars = [...UPPER, ...'ЁЪЫЭ', ...LOWER, ...'ёъыэ', 'ʼ', '₴', '№'].filter(ch => by.has(ch) && by.get(ch).cmds.length);
-  $('#qGrid').innerHTML = chars.map(ch => {
-    const l = by.get(ch), isNew = l.layer !== 'own', out = isNew && Fk.heldBack(l);
+  const cell = (ch, inAdd) => {
+    const l = by.get(ch), isNew = l.layer !== 'own', out = isNew && Fk.heldBack(l), chk = isNew && WORK.has(l.conf) && l.layer !== 'copy';
     let cmds = l.cmds, adv = l.adv;
     if (st.was === 2 && isNew && st.demo) { const g = st.font.charToGlyph(ch); if (g && g.index > 0 && g.path.commands.length) { cmds = g.path.commands; adv = g.advanceWidth; } }
-    const cls = isNew ? 'new ' + (l.layer === 'copy' ? 'high' : l.conf) + (out ? ' out' : '') : '';
-    return `<button class="gc ${cls}" data-cell="${esc(ch)}" aria-current="${ch === st.sel}" title="${esc(ch)} · U+${hex(ch.codePointAt(0))}">${cellSVG(cmds, adv, M)}<span class="nm"><b>${esc(ch)}</b><i>${hex(ch.codePointAt(0))}</i></span></button>`;
-  }).join('');
+    const word = chk ? T('tagChk') : isNew && st.hadCyr && !inAdd ? T('tagNew') : '';
+    const cls = (word ? 'new' : '') + (out ? ' out' : '');
+    return `<button class="gc ${cls}" data-cell="${esc(ch)}" aria-current="${ch === st.sel}" title="${esc(ch)} · U+${hex(ch.codePointAt(0))}">${cellSVG(cmds, adv, M)}<span class="nm"><b>${esc(ch)}</b>${word ? `<i class="w">${word}</i>` : `<i>${hex(ch.codePointAt(0))}</i>`}</span></button>`;
+  };
+  const added = chars.filter(ch => by.get(ch).layer !== 'own'), strip = st.hadCyr && added.length && added.length < chars.length / 2;
+  $('#qAddW').hidden = !strip;
+  $('#qAdd').innerHTML = strip ? added.map(ch => cell(ch, true)).join('') : '';
+  $('#qAddT').textContent = strip ? T('addT', added.length) : '';
+  $('#qAllT').textContent = strip ? T('allT') : '';
+  $('#qGrid').innerHTML = chars.map(ch => cell(ch, false)).join('');
+  const key = st.was === 1 ? (st.hadCyr ? added[0] : null) : st.hadCyr ? added[0] : [...eye][0];
+  const keyCh = added.includes('Ґ') && (st.hadCyr || st.was === 1) ? 'Ґ' : key;
+  $('#qLeg').innerHTML = keyCh && (st.was === 1 || st.qhl && st.was === 0) ? `<span class="t"><u>${esc(keyCh)}</u></span><span>${T(st.was === 1 ? 'legWas' : st.hadCyr ? 'legNew' : 'legEye')}</span>` : '';
   const nNew = chars.filter(ch => by.get(ch).layer !== 'own').length;
   $('#qCount').textContent = st.lang === 'ru' ? `новых ${nNew} из ${chars.length}` : st.lang === 'uk' ? `нових ${nNew} з ${chars.length}` : `${nNew} new of ${chars.length}`;
   $('#qBody').innerHTML = mark(BODY); $('#qSmall').innerHTML = mark(SMALLT); $('#qPost').innerHTML = mark(POST_T);
