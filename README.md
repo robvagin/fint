@@ -1,6 +1,6 @@
 # FINT
 
-Ukrainian letters for any font. Version 0.5.
+Ukrainian letters for any font. Version 0.9.
 
 Many fonts ship with Russian Cyrillic and stop there: no Ґ, Є, І, Ї. FINT opens a `.ttf` or `.otf`, builds the
 missing letters from the font's own parts and writes them back into the same file.
