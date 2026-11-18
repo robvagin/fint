@@ -1370,6 +1370,14 @@ function create(paper) {
         const n = splitContours(g.cmds).length;
         if (n >= 2 && n < 4) { o.conf = 'mid'; o.notes = (o.notes || []).concat(['у родной Г составной контур: усик проверить глазом']); }
       }
+      if (o && serif && !/рукописная/.test(o.recipe || '')) {
+        try {
+          const b0 = o.pieces.map(p => bb(p.item)).filter(Boolean), x0 = Math.min(...b0.map(q => q.x0)), x1 = Math.max(...b0.map(q => q.x1));
+          const col = sV(toCmds(o.pieces[0].item), x0 + (x1 - x0) * 0.5).filter(q => q[1] > K.h * 0.6), under = col.length ? col[col.length - 1][0] : K.h - (K.up ? barTop : K.barTop);
+          const cut = box(x0 + (x1 - x0) * 0.55, -B5, B5, under - 1);
+          o.pieces = o.pieces.map(p => { const it = D(p.item, cut); return isEmpty(it) ? p : Object.assign({}, p, { item: it }); });
+        } catch (e) {  }
+      }
       return o;
     };
     R['Ґ'] = () => upOwn('Г', CAPS);
@@ -1432,7 +1440,13 @@ function create(paper) {
     }
     const GAPMIN = 0.7;
     function stems(K, n, bar, tail, ch) {
-      const sw = K.st.w, pitch = n === 3 ? Math.max(K.pitch * kc(ch, 'pitch'), sw + K.gap * GAPMIN) : K.pitch;
+      let pitch0 = n === 3 ? Math.max(K.pitch * kc(ch, 'pitch'), K.st.w + K.gap * GAPMIN) : K.pitch;
+      if (serif && n === 3) {
+        const spread = y => { const q = sH(K.S.cmds, y); return q.length ? q[q.length - 1][1] - q[0][0] : 0; }, sW = Math.max(spread(K.h * 0.012), spread(K.h * 0.985));
+        const q = K.up ? sH(Hg.cmds, K.h * (bar === 'bottom' ? 0.985 : 0.012)) : [], sg = q.length >= 2 ? q[q.length - 1][0] - q[0][1] : K.gap * 0.25;
+        if (sW > K.st.w * 1.2) pitch0 = Math.max(pitch0, sW + Math.max(hair, sg * 0.6));
+      }
+      const sw = K.st.w, pitch = pitch0;
       const xs = []; for (let i = 0; i < n; i++) xs.push(K.L0 + i * pitch);
       const right = xs[n - 1] + sw;
       const pcs = xs.map((x, i) => piece(K.name, 'штамб ' + (i + 1), stemAt(K, x)));
@@ -2769,7 +2783,7 @@ const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAl
 const Fk = window.Frank, F = Fk.create(window.paper);
 const st = { font: null, res: null, mode: 'parts', filter: 'all', size: 56, hl: true, squint: false, face: null, file: '', pick: {}, open: null, pmode: 'none',
   brain: null, brainOn: false, th: null, res0: null, buf: null, exam: null, view: 'quick', qhl: true, saved: null, job: null, sample: 'Їжак і ґава їдуть до Європи', qsize: 104, sel: null, was: 0, hide: '', demo: false, lang: 'ru', web: false, set: { scope: 'missing', ru: '1', dots: 'ua', up: 'mid', suffix: 'UA' } };
-const VERSION = '0.9';
+const VERSION = '0.9.1';
 const Br = window.Brain;
 const CONF = { own: 'есть в шрифте', copy: 'копия', high: 'почти готово', mid: 'проверить стыки', low: 'доводка руками', none: 'рисовать', drawn: 'нарисовано' };
 const WORK = new Set(['mid', 'low', 'none']);
