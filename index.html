@@ -1184,11 +1184,23 @@ function create(paper) {
     const has = ch => !!G(ch);
     const need = (...chs) => { for (const c of chs) if (!G(c)) throw new Error('нет ' + c); };
     need('H', 'I', 'O', 'n', 'o', 'x');
-    const Hg = G('H'), Ig = G('I'), Og = G('O');
+    const B5 = 1e5;
+    const Hg = G('H'), Og = G('O');
+    const cleanStem = (g, ref, h, name) => {
+      const gm = sH(g.cmds, h * 0.5), gf = sH(g.cmds, h * 0.012), rm = sH(ref.cmds, h * 0.25), rf = sH(ref.cmds, h * 0.012), gt = sH(g.cmds, h * 0.985), rt = sH(ref.cmds, h * 0.985);
+      if (gm.length !== 1 || !gf.length || rm.length < 2 || !rf.length) return null;
+      const gw = wid(gm[0]), spread = a => a.length ? a[a.length - 1][1] - a[0][0] : 0, rw = wid(rm[0]);
+      const slab = spread(gf) > gw * 1.45 || spread(gt) > gw * 1.45, refClean = wid(rf[0]) <= rw * 1.15 && (!rt.length || wid(rt[0]) <= rw * 1.25);
+      if (!slab || !refClean) return null;
+      const cmds = toCmds(X(ref.it(), box(-B5, -B5, rm[0][1], B5))); if (!cmds.length) return null;
+      const r = { ch: name, raw: cmds, cmds, adv: rm[0][0] * 2 + rw, bb: bbox(cmds), _it: null, clean: true }; r.it = () => r._it || (r._it = solid(fromCmds(r.cmds))); return r;
+    };
+    const IgOwn = G('I');
+    { const c = cleanStem(G('I'), Hg, Hg.bb.y1, 'I'); if (c) cache.set('I', c); }
+    const Ig = G('I');
     const cap = Hg.bb.y1, xh = G('x').bb.y1;
     const asc = (G('l') || G('h') || G('d') || Hg).bb.y1, desc = (G('p') || G('q') || { bb: { y0: -cap * 0.25 } }).bb.y0;
     const ovC = Math.max(0, Og.bb.y1 - cap), ovX = Math.max(0, G('o').bb.y1 - xh);
-    const B5 = 1e5;
     function stemOf(g, y) { const s = sH(g.cmds, y)[0]; return s ? { l: s[0], r: s[1], w: wid(s) } : null; }
     function footOf(g, stem, h) {
       const f = sH(g.cmds, h * 0.012);
@@ -1202,6 +1214,8 @@ function create(paper) {
     const serif = foot.on;
     let dl = G('ı');
     if (!dl) { const i = G('i'); const cts = splitContours(i.cmds).filter(ct => bbox(ct).y1 < xh * 1.08); dl = { ch: 'ı', cmds: [].concat(...cts), adv: i.adv }; dl.bb = bbox(dl.cmds); dl.it = () => dl._it || (dl._it = fromCmds(dl.cmds)); }
+    const dlOwn = dl;
+    { const c = G('n') && cleanStem(dl, G('n'), xh, 'ı'); if (c) dl = c; }
     const stemL = stemOf(dl, xh * 0.5);
     const footL = footOf(dl, stemL, xh);
     const hs = sH(Hg.cmds, cap * 0.25);
@@ -1506,13 +1520,13 @@ function create(paper) {
       return [piece(d.src, d.part + (gapK < 0.8 ? ', сближены по-украински' : ''), move(d.item, left - b.x0, 0)), piece(d.src, d.part, move(d.item, left + w + g - b.x0, 0))];
     }
     function yi(K) {
-      const sc = K.st.l + K.st.w / 2;
+      const base = K.up ? IgOwn : dlOwn, bs = stemOf(base, K.h * 0.5) || K.st, sc = bs.l + bs.w / 2;
       const dots = twoDots(K, sc, kc(K.up ? 'Ї' : 'ї', 'gap')); if (!dots) return null;
       const src = K.up ? 'I' : 'ı';
-      const o = out([piece(src, 'основа', K.S.it())].concat(dots), src + ' + две точки, сближенные по-украински', K.up ? ['I', 'I'] : ['i', 'i'], 'high');
+      const o = out([piece(src, 'основа', base.it())].concat(dots), src + ' + две точки, сближенные по-украински', K.up ? ['I', 'I'] : ['i', 'i'], 'high');
       const don = G(K.up ? 'I' : 'i');
       if (don) {
-        const d0 = bb(dots[0].item), d1 = bb(dots[1].item), sb0 = bb(K.S.it()), half = Math.max((d1.x0 - d0.x1) * 0.75, d0.w * 0.2);
+        const d0 = bb(dots[0].item), d1 = bb(dots[1].item), sb0 = bb(base.it()), half = Math.max((d1.x0 - d0.x1) * 0.75, d0.w * 0.2);
         const x0 = Math.min(sb0.x0, d0.x0), x1 = Math.max(sb0.x1, d1.x1);
         o.sb = [{ abs: x0 + Math.max(0, half - d0.x0) }, { abs: don.adv - x1 + Math.max(0, half - (don.adv - d1.x1)) }];
         o.fixSB = true;
@@ -1609,16 +1623,17 @@ function create(paper) {
       return r;
     }
     R['к'] = () => { const k = kNoAsc(); return k && out([piece('k', 'плечо и нога, выносной срезан', k.it())], 'k без выносного, верх штамба от ı', ['k', 'k'], 'high'); };
+    const UYW = 1, DEG = 0.7, DEGL = 0.7, DEH = 1;
     function el(K, de) {
       const lc = de ? (K.up ? 'Д' : 'д') : (K.up ? 'Л' : 'л');
       const sw = K.st.w, span = (K.R1 - K.L0) * kc(lc, 'span'), h = K.h;
       const xr = K.L0 + span - sw;
       const lt0 = kc(lc, 'thin'), legW0 = lt0 === 1 ? K.thin : K.thin * lt0;
-      const slope = Math.max(kc(lc, 'slope'), (K.gap * (de ? 0.7 : 1.0) + legW0 / 2 - K.gap * kc(lc, 'top')) / h);
+      const slope = Math.max(kc(lc, 'slope'), (K.gap * (de ? (sw / h > 0.2 ? DEH : K.up ? DEG : DEGL) : 1.0) + legW0 / 2 - K.gap * kc(lc, 'top')) / h);
       const xt = xr - K.gap * kc(lc, 'top'), xAt = y => xt - (h - y) * slope;
       const pcs = [piece(K.name, 'правый штамб', stemAt(K, xr, de ? K.barBot * 0.5 : -B5))];
       const over = serif ? K.thin * (de ? 0.8 : 0.3) : 0;
-      pcs.push(piece('E', 'плоский верх толщиной плеча' + (over ? ', свес влево как у засечки' : ''), box(xt - K.thin * 0.5 - over, h - K.barTop, xr + sw * 0.5, h)));
+      pcs.push(piece('E', 'плоский верх толщиной плеча' + (over ? ', свес влево как у засечки' : ''), box(xt - K.thin * 0.5 - over, h - K.barTop, xr + sw * (serif ? 0.5 : 1), h)));
       let legBottom = de ? K.barBot * 0.5 : 0;
       const yt = !de && serif && G('y') ? yTail(1) : null;
       if (yt) {
@@ -1650,6 +1665,18 @@ function create(paper) {
       return pcs;
     }
     const tiny = Math.round(Hg.bb.x0 * 0.25);
+    function elJ(K, g = 0.9) {
+      const J = G(K.up ? 'J' : 'j'); if (!J) return null;
+      const h = K.h, lc = K.up ? 'Л' : 'л', sw = K.st.w;
+      const body = K.up ? J.cmds : [].concat(...splitContours(J.cmds).filter(ct => bbox(ct).y0 < h * 0.5)); if (!body.length) return null;
+      const bb = bbox(body), shift = bb.y0 < -h * 0.04 ? -bb.y0 - K.ov : 0;
+      const ss = sH(body, bb.y0 + h * 0.62), s = ss[ss.length - 1]; if (!s || ss.length > 1) return null;
+      const hookW = s[0] - bb.x0; if (hookW < sw * 0.5 || wid(s) > sw * 1.25 || wid(s) < sw * 0.75) return null;
+      const xr = K.L0 + (K.R1 - K.L0) * kc(lc, 'span') - sw, dx = xr - K.gap * g - s[1];
+      const leg = X(move(fromCmds(body), dx, shift), box(-B5, -B5, B5, h - K.barTop * 0.5));
+      return [piece(K.name, 'правый штамб', stemAt(K, xr, -B5)), piece('E', 'плоский верх толщиной плеча', box(s[0] + dx, h - K.barTop, xr + sw * 0.5, h)),
+        piece(K.up ? 'J' : 'j', K.up ? 'нога: J целиком' : 'нога: j без точки, поднята на линию', leg)];
+    }
     R['Л'] = () => out(el(CAPS, false), 'штамб I + плоский верх + тонкая нога A' + (G('y') ? ' с хвостом y' : ''), ['A', 'H'], 'mid');
     R['л'] = () => out(el(LOW, false), 'штамб ı + плоский верх + тонкая нога v' + (G('y') ? ' с хвостом y' : ''), ['v', 'n'], 'mid');
     R['Д'] = () => out(el(CAPS, true), 'Л на основании + свесы из клюва E', [tiny, tiny], 'mid');
@@ -1684,8 +1711,15 @@ function create(paper) {
       const sb = bb(shape), s = sH(toCmds(shape), y);
       const inner = rev ? (s.length ? s[s.length - 1][0] : sb.x1 - K.st.w) : (s.length ? s[0][1] : sb.x0 + K.st.w);
       const ec = rev ? (K.up ? 'Э' : 'э') : (K.up ? 'Є' : 'є');
-      const x0 = rev ? sb.x0 + sb.w * kc(ec, 'bar') : inner - K.st.w * 0.4, x1 = rev ? inner + K.st.w * 0.4 : sb.x0 + sb.w * kc(ec, 'bar');
-      return [piece(Cg.ch, part, shape), piece('H', 'перекладина', box(x0, y - t / 2, x1, y + t / 2))];
+      let x0 = rev ? sb.x0 + sb.w * kc(ec, 'bar') : inner - K.st.w * 0.4, x1 = rev ? inner + K.st.w * 0.4 : sb.x0 + sb.w * kc(ec, 'bar');
+      const sc = toCmds(shape), xm = rev ? inner - (inner - sb.x0) * 0.3 : inner + (sb.x1 - inner) * 0.3, vs = sV(sc, xm);
+      let yb = y, tb = t;
+      if (vs.length >= 2) { const lo = vs[0][1], hi = vs[vs.length - 1][0], ih = hi - lo; if (ih > 0) { tb = Math.min(t, ih * 0.36); if (ih < t * 3) yb = (lo + hi) / 2; } }
+      let tip = rev ? -B5 : B5;
+      for (let i = 0; i <= 8; i++) { const q = sH(sc, yb - tb * 0.9 + tb * 1.8 * i / 8); if (q.length >= 2) tip = rev ? Math.max(tip, q[q.length - 2][1]) : Math.min(tip, q[1][0]); }
+      const clear = Math.max(K.thin * 0.4, sb.w * 0.07);
+      if (rev) x0 = Math.min(Math.max(x0, tip + clear), inner - sb.w * 0.12); else x1 = Math.max(Math.min(x1, tip - clear), inner + sb.w * 0.12);
+      return [piece(Cg.ch, part, shape), piece('H', 'перекладина', box(x0, yb - tb / 2, x1, yb + tb / 2))];
     }
     function ownBar(g, ext) {
       const b = g.bb, Hh = b.y1 - b.y0, rows = [], N = 80;
@@ -1923,7 +1957,7 @@ function create(paper) {
         const c = G(','); if (!c) return null;
         return out([piece(',', 'запятая, поднята к верху прописных', move(c.it(), 0, cap - c.bb.y1))], 'запятая наверху', [',', ','], 'mid', ['в шрифте нет ’ и \': апостроф из запятой']);
       },
-      'У': () => { const y = G('y'); if (!y) return null; const sy = cap / (xh - y.bb.y0); return out([piece('y', 'растянута до прописной', move(scl(y.it(), sy * 0.85, sy, 0, y.bb.y0), 0, -y.bb.y0))], 'y, растянутая до прописной', ['y', 'y'], 'low', ['запасной путь: V в этом шрифте не разобралась']); },
+      'У': () => { const y = G('y'); if (!y) return null; const sy = cap / (xh - y.bb.y0); return out([piece('y', 'растянута до прописной', move(scl(y.it(), sy * UYW, sy, 0, y.bb.y0), 0, -y.bb.y0))], 'y, растянутая до прописной', ['y', 'y'], 'low', ['запасной путь: V в этом шрифте не разобралась']); },
       'б': () => { const g = G('6'); return g && out([piece('6', 'цифра целиком', g.it())], 'цифра 6', ['6', '6'], 'low', ['запасной путь: флажок у 6 не нашёлся']); },
       'Ь': () => { const g = G('P'); if (!g) return null; const b = g.bb; return out([piece('P', 'вверх ногами', flipY(g.it(), (b.y0 + b.y1) / 2))], 'P вверх ногами', ['P', 'P'], 'low', ['запасной путь: B не разобралась']); },
       'З': () => {
@@ -1942,6 +1976,8 @@ function create(paper) {
     const glyphIt = ch => G(ch) && G(ch).it();
     const flipped = ch => { const g = G(ch); return g && flipY(g.it(), (g.bb.y0 + g.bb.y1) / 2); };
     const turned = ch => { const g = G(ch); return g && rot180(g.it(), (g.bb.x0 + g.bb.x1) / 2, (g.bb.y0 + g.bb.y1) / 2); };
+    const uV0 = R['У'];
+    R['У'] = () => { const r = R2['У'](); if (!r) return uV0(); r.conf = 'mid'; r.notes = []; return r; };
     const ALT = {
       'Б': [['P вверх ногами + L вверх ногами', () => {
         const P = G('P'), L = G('L'); if (!P || !L) return null;
@@ -1968,14 +2004,15 @@ function create(paper) {
       }]],
       'З': [['чаши B + кончики C', () => zeGlued()]],
       'И': [['N зеркально', () => { const N = G('N'); return N && out([piece('N', 'зеркально', mirX(N.it(), N.adv / 2))], 'N зеркально', ['~N', '~N'], 'mid', ['у антиквы зеркало делает диагональ толстой, а штамбы тонкими']); }]],
-      'Л': [['V вверх ногами', () => { const v = flipped('V'); return v && out([piece('V', 'вверх ногами', v)], 'V↕', ['V', 'V'], 'mid', ['острая вершина: греческая Λ']); }],
+      'Л': [['нога из J', () => { const p = elJ(CAPS); return p && out(p, 'штамб I + плоский верх + нога J', ['A', 'H'], 'mid'); }],
+            ['V вверх ногами', () => { const v = flipped('V'); return v && out([piece('V', 'вверх ногами', v)], 'V↕', ['V', 'V'], 'mid', ['острая вершина: греческая Λ']); }],
             ['A без перекладины', () => {
               const A = G('A'); if (!A) return null; const v = sV(A.cmds, (A.bb.x0 + A.bb.x1) / 2), cr = v.find(s => s[1] < cap * 0.8 && s[0] > cap * 0.05); if (!cr) return null;
               const above = sH(A.cmds, cr[1] + cap * 0.03); if (above.length < 2) return null;
               return out([piece('A', 'перекладина вынута', D(A.it(), box(above[0][1], cr[0] - 1, above[above.length - 1][0], cr[1] + 1)))], 'A без перекладины', ['A', 'A'], 'mid');
             }]],
       'П': [['U вверх дном', () => { const u = turned('U'); return u && out([piece('U', 'повёрнута на 180°: круглый верх', u)], 'U повёрнутая', ['U', 'U'], 'low'); }]],
-      'У': [['y, растянутая до прописной', () => R2['У']()]],
+      'У': [['ветви V к развилке', () => uV0()]],
       'Ф': [['O + I', () => {
         const O = Og, c = (O.bb.x0 + O.bb.x1) / 2, sw = stem.w * 0.92;
         const o = scl(O.it(), 1, 0.74, c, cap / 2);
@@ -2016,7 +2053,7 @@ function create(paper) {
         const h = G('h'); if (!h) return null; const b = h.bb;
         return out([piece('h', 'повёрнута на 180° и сжата', scl(rot180(h.it(), (b.x0 + b.x1) / 2, (b.y0 + b.y1) / 2), 1, xh / b.h, 0, b.y0))], 'h⟲', ['n', 'n'], 'low');
       }]],
-      'л': [['v вверх ногами', () => { const v = flipped('v'); return v && out([piece('v', 'вверх ногами', v)], 'v↕', ['v', 'v'], 'mid'); }]],
+      'л': [['нога из j', () => { const p = elJ(LOW); return p && out(p, 'штамб ı + плоский верх + нога j', ['v', 'n'], 'mid'); }], ['v вверх ногами', () => { const v = flipped('v'); return v && out([piece('v', 'вверх ногами', v)], 'v↕', ['v', 'v'], 'mid'); }]],
     };
     if (!(serif && stress.contrast < 0.5)) for (const ch of ['Ь', 'Б', 'И', 'Г']) {
       const main = R[ch], alt = ALT[ch] && ALT[ch][0]; if (!main || !alt) continue;
@@ -2024,7 +2061,15 @@ function create(paper) {
     }
     const WHOLE = { 'Л': [0.2, 2], 'л': [0.2, 2], 'Д': [0.45, 2], 'д': [0.45, 2], 'Ш': [0.7, 3], 'ш': [0.7, 3], 'Щ': [0.7, 3], 'щ': [0.7, 3], 'П': [0.4, 2], 'п': [0.4, 2],
       'И': [0.85, 2], 'и': [0.85, 2], 'Й': [0.85, 2], 'й': [0.85, 2], 'Ц': [0.6, 2], 'ц': [0.6, 2], 'Ч': [0.8, 2], 'ч': [0.8, 2], 'Ж': [0.12, 3], 'ж': [0.12, 3], 'Ю': [0.25, 3], 'ю': [0.25, 3], 'Ы': [0.8, 2], 'ы': [0.8, 2] };
-    const whole = (ch, cmds) => { const e = WHOLE[ch]; if (!e) return true; const H = ch !== ch.toLowerCase() ? cap : xh, sp = sH(cmds, H * e[0]), min = Math.max(1, stemL.w * 0.06); let n = sp.length ? 1 : 0; for (let i = 1; i < sp.length; i++) if (sp[i][0] - sp[i - 1][1] >= min) n++; return n >= e[1]; };
+    const whole0 = (ch, cmds) => { const e = WHOLE[ch]; if (!e) return true; const H = ch !== ch.toLowerCase() ? cap : xh, sp = sH(cmds, H * e[0]), min = Math.max(1, stemL.w * 0.06); let n = sp.length ? 1 : 0; for (let i = 1; i < sp.length; i++) if (sp[i][0] - sp[i - 1][1] >= min) n++; return n >= e[1]; };
+    const HOLES = {}; for (const c of 'БДЬЪЫЮЯбдьъыюя') HOLES[c] = 1; for (const c of 'ВФвф') HOLES[c] = 2; for (const c of 'ГҐЄЖЗИЙЛПУЦЧШЩЭгґєжзийклмнптцчшщэ') HOLES[c] = 0;
+    const holesOf = cmds => {
+      const ar = polys(cmds, 8).map(p => { let a = 0; for (let i = 0; i < p.length; i++) { const q = p[(i + 1) % p.length]; a += p[i][0] * q[1] - q[0] * p[i][1]; } return a / 2; });
+      if (!ar.length) return 0; const big = ar.reduce((m, a) => Math.abs(a) > Math.abs(m) ? a : m, 0), minA = Math.pow(Math.max(2, hair * 0.3), 2);
+      return ar.filter(a => a * big < 0 && Math.abs(a) >= minA).length;
+    };
+    const latinSane = holesOf(Og.cmds) === 1 && holesOf(Hg.cmds) === 0 && (!G('B') || holesOf(G('B').cmds) === 2) && (!G('C') || holesOf(G('C').cmds) === 0);
+    const whole = whole0, holesOk = (ch, cmds) => !latinSane || HOLES[ch] === undefined || holesOf(cmds) === HOLES[ch];
     const recipesOf = ch => [['основной', () => R[ch] ? R[ch]() : null]].concat(ALT[ch] || []);
     if (Math.abs(slant) > 0.05) {
       const cp = (src, note) => () => { const g = G(src); return g && out([piece(src, note, g.it())], 'курсив: ' + src, [src, src], 'high'); };
@@ -2099,6 +2144,7 @@ function create(paper) {
         }
         if (!got) { res.conf = 'low'; res.notes = (res.notes || []).concat(['штрихи слиплись, просвет закрыт: рисовать руками']); }
       }
+      if (f && f.cmds.length && res.conf !== 'low' && res.conf !== 'copy' && res.conf !== 'own' && !holesOk(ch, f.cmds)) { res.conf = 'low'; res.notes = (res.notes || []).concat(['число замкнутых просветов не как у этой буквы: проверить глазами']); }
       if (R2[ch] && (!f || !f.cmds.length)) { const r2 = R2[ch](); if (r2) { const f2 = fuse(r2); if (f2.cmds.length) { res = r2; f = f2; } } }
       if (!res || !f.cmds.length) return { ch, pieces: [], cmds: [], adv: 0, recipe: res ? 'сборка не удалась, рисовать' : 'донора нет, рисовать', conf: 'none', notes: [] };
       if (res.conf === 'own' || res.conf === 'copy') res.conf = 'high';
