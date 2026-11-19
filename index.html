@@ -279,16 +279,12 @@ body.drop { outline: none; } body.drop .dropz { background: var(--teal-soft); bo
 }
 
 
-body.fint .wrap { padding-bottom: 200px; }
-.dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 15; background: var(--ground); box-shadow: 0 -1px 0 var(--hair), 0 -18px 48px rgba(20, 18, 14, 0.07); display: flex; flex-direction: column; }
-.dk-h { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; justify-content: space-between; padding: 10px 24px 8px; }
+.dk-h { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; justify-content: space-between; padding: 2px 0 12px; }
 .dk-h h1 { font-size: var(--t12); font-weight: 620; letter-spacing: 0; } .dk-h .cnt { font: var(--t12) var(--mono); color: var(--muted); }
-.dk-strip { display: flex; gap: 10px; overflow-x: auto; padding: 0 24px 12px; flex: none; }
-.dk-strip .gg, .dk-strip .gg.add { display: flex; flex-wrap: nowrap; flex: none; width: auto; max-width: none; }
-.dk-strip .gg:empty { display: none; }
-.dock .dk-strip .gc { width: 58px; flex: none; } .dock .dk-strip .gc svg { padding: 8px 6px 2px; } .dock .dk-strip .gc .nm { padding: 5px 6px 6px; justify-content: center; } .dock .dk-strip .gc .nm i { display: none; }
-.ex.g { grid-column: span 12; background: #ecebe6; padding: 20px; min-height: 0; }
-.ex.g .insp { display: grid; grid-template-columns: minmax(320px, 1.25fr) minmax(200px, 0.8fr) minmax(300px, 1.5fr); gap: 20px 28px; align-items: start; }
+.ex.g { grid-column: span 12; background: #ecebe6; padding: 20px; min-height: 0; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 20px 28px; align-items: start; }
+.ex.g[hidden] { display: none; }
+.ex.g .gg { grid-template-columns: repeat(auto-fill, minmax(62px, 1fr)); } .ex.g .gc svg { padding: 9px 7px 2px; } .ex.g .gc .nm { padding: 5px 6px 6px; justify-content: center; } .ex.g .gc .nm i { display: none; }
+.ex.g .insp { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .ex.g .insp-head { flex-wrap: wrap; }
 .gv { background: #fafaf8; border-radius: 8px; overflow: hidden; }
 .gv svg { width: 100%; height: auto; max-height: 520px; display: block; }
@@ -314,9 +310,8 @@ body.fint .wrap { padding-bottom: 200px; }
 .var.bad span { color: var(--accent-ink); }
 
 .show b.cur { font-weight: inherit; box-shadow: inset 0 -0.09em 0 currentColor; }
-@media (max-width: 1100px) { .ex.g .insp { grid-template-columns: minmax(260px, 1fr) minmax(200px, 1fr); } .ex.g .insp .col.dn { grid-column: 1 / -1; } }
-@media (max-width: 900px) { .dk-h, .dk-strip { padding-left: 16px; padding-right: 16px; } }
-@media (max-width: 600px) { .ex.g { padding: 12px; } .ex.g .insp { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .ex.g { grid-template-columns: minmax(0, 1fr); } .ex.g .insp { order: -1; } .ex.g .gg { grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); } }
+@media (max-width: 600px) { .ex.g { padding: 12px; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } button:active { transform: none; } }
 </style>
 <style>html:not([data-ready]) body { visibility: hidden; animation: fintboot 0s 4s forwards; } @keyframes fintboot { to { visibility: visible; } }</style>
@@ -356,14 +351,10 @@ body.fint .wrap { padding-bottom: 200px; }
         <article class="ex p"><span class="lab" data-t="exP">Панграмма</span><div class="t pg" id="qPang"></div></article>
         <article class="ex a" hidden><span class="lab" data-t="exA">Статья</span><div class="t hd" id="qLine" contenteditable="plaintext-only" spellcheck="false" aria-label="заголовок, можно править"></div><div class="t bd" id="qBody"></div></article>
         <article class="ex b" hidden><span class="lab" data-t="exB">Плакат</span><div class="t big" id="qCaps"></div><div class="t sm" id="qPost"></div></article>
-        <article class="ex g" id="gview"><div class="insp" id="insp"></div></article>
+        <article class="ex g" id="gview"><div class="gl"><div class="dk-h"><h1 id="qTitle"></h1><span class="cnt" id="qCount"></span></div><div class="gg" id="qGrid"></div><div id="qAdd" style="display:none"></div></div><div class="insp" id="insp"></div></article>
         <article class="ex c"><span class="lab" data-t="exC">Меню</span><div class="t rows" id="qMenu"></div><div class="t sm" id="qSmall"></div></article>
         <article class="ex d"><span class="lab" data-t="exD">Цитата</span><div class="t qt" id="qQuote"></div><div class="t sm" id="qBy"></div></article>
         <article class="ex f"><span class="lab" data-t="exF">Метки</span><div class="t chips" id="qChips"></div></article>
-      </div>
-      <div class="dock" id="dock">
-        <div class="dk-h"><h1 id="qTitle"></h1><span class="cnt" id="qCount"></span></div>
-        <div class="dk-strip"><div class="gg add" id="qAdd"></div><div class="gg" id="qGrid"></div></div>
       </div>
     </div>
     <details class="setd" id="setd"><summary data-t="setOpen">Настройки</summary>
@@ -2907,7 +2898,7 @@ const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAl
 const Fk = window.Frank, F = Fk.create(window.paper);
 const st = { font: null, res: null, mode: 'parts', filter: 'all', size: 56, hl: true, squint: false, face: null, file: '', pick: {}, open: null, pmode: 'none',
   brain: null, brainOn: false, th: null, res0: null, buf: null, exam: null, view: 'quick', qhl: true, saved: null, job: null, sample: 'Їжак і ґава їдуть до Європи', qsize: 104, sel: null, was: 0, hide: '', demo: false, lang: 'ru', web: false, donor: {}, donors: {}, dn: { on: false, part: null, src: null, scan: null, tries: null }, set: { scope: 'missing', ru: '1', dots: 'ua', up: 'mid', suffix: 'UA' } };
-const VERSION = '0.9.2';
+const VERSION = '0.9.3';
 const Br = window.Brain;
 const CONF = { own: 'есть в шрифте', copy: 'копия', high: 'почти готово', mid: 'проверить стыки', low: 'доводка руками', none: 'рисовать', drawn: 'нарисовано' };
 const WORK = new Set(['mid', 'low', 'none']);
@@ -3645,7 +3636,7 @@ picker.addEventListener('change', () => { const f = picker.files[0]; picker.valu
 document.addEventListener('click', e => {
   const c = e.target.closest('[data-cell]');
   if (c) {
-    if (c.closest('#quick')) { st.sel = c.dataset.cell; dnReset(); renderQSpec(); renderInsp(); const gv = $('#gview'), r = gv.getBoundingClientRect(), dock = $('#dock').offsetHeight; if (r.top < 0 || r.top + Math.min(r.height, 260) > innerHeight - dock) scrollTo({ top: scrollY + r.top - 16, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); return; }
+    if (c.closest('#quick')) { st.sel = c.dataset.cell; dnReset(); renderQSpec(); renderInsp(); const r = $('#insp').getBoundingClientRect(); if (r.bottom < 80 || r.top > innerHeight - 80) scrollTo({ top: scrollY + r.top - 16, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); return; }
     const id = 'g-' + hex(c.dataset.cell.codePointAt(0));
     if (!document.getElementById(id)) { st.filter = 'all'; $$('[data-filter]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.filter === 'all'))); renderGrid(); }
     const card = document.getElementById(id); if (!card) return;
