@@ -199,8 +199,8 @@ body.fint [data-act="pick"] { display: none; }
 .show.was .ex.b u { box-shadow: inset 0 0 0 max(1.5px, 0.035em) rgba(26, 26, 26, 0.45); } .show.was .ex.c u { box-shadow: inset 0 0 0 max(1.5px, 0.035em) #6d6a63; }
 
 .exs { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 20px; }
-.ex.p { grid-column: span 12; } .ex.a { grid-column: span 5; } .ex.b { grid-column: span 3; } .ex.c { grid-column: span 4; } .ex.d { grid-column: span 6; } .ex.e { grid-column: span 3; } .ex.f { grid-column: span 3; }
-.ex { border-radius: 12px; padding: 32px 36px 40px; display: flex; flex-direction: column; gap: 20px; min-width: 0; min-height: 320px; }
+.ex.p { grid-column: span 12; } .ex.a { grid-column: span 5; } .ex.b { grid-column: span 3; } .ex.c { grid-column: span 4; } .ex.d { grid-column: span 5; } .ex.f { grid-column: span 3; } .ex[hidden] { display: none; }
+.ex { border-radius: 12px; padding: 32px 36px 40px; display: flex; flex-direction: column; gap: 20px; min-width: 0; min-height: 260px; }
 .ex.p { min-height: 0; background: #ecebe6; } .ex.p .pg { font-size: clamp(28px, 4.6vw, 66px); line-height: 1.08; letter-spacing: -0.005em; }
 .ex.d { background: #d9d8d2; justify-content: space-between; } .ex.d .qt { font-size: clamp(22px, 2.5vw, 36px); line-height: 1.22; } .ex.d .sm { font-size: 14px; color: #5c5b57; }
 .ex.e { background: #3d3c39; color: #ecebe6; } .ex.e .hd2 { font-size: 20px; letter-spacing: 0.06em; } .ex.e .kv { display: flex; flex-direction: column; gap: 12px; font-size: 15px; line-height: 1.3; margin-top: auto; } .ex.e .kv span { display: block; font: 550 10px/1 var(--ui); letter-spacing: 0.08em; text-transform: uppercase; color: #a6a59f; margin-bottom: 4px; }
@@ -277,6 +277,46 @@ body.drop { outline: none; } body.drop .dropz { background: var(--teal-soft); bo
   .atlas { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
   .spec { padding: 16px; }
 }
+
+
+body.fint .wrap { padding-bottom: 200px; }
+.dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 15; background: var(--ground); box-shadow: 0 -1px 0 var(--hair), 0 -18px 48px rgba(20, 18, 14, 0.07); display: flex; flex-direction: column; }
+.dk-h { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; justify-content: space-between; padding: 10px 24px 8px; }
+.dk-h h1 { font-size: var(--t12); font-weight: 620; letter-spacing: 0; } .dk-h .cnt { font: var(--t12) var(--mono); color: var(--muted); }
+.dk-strip { display: flex; gap: 10px; overflow-x: auto; padding: 0 24px 12px; flex: none; }
+.dk-strip .gg, .dk-strip .gg.add { display: flex; flex-wrap: nowrap; flex: none; width: auto; max-width: none; }
+.dk-strip .gg:empty { display: none; }
+.dock .dk-strip .gc { width: 58px; flex: none; } .dock .dk-strip .gc svg { padding: 8px 6px 2px; } .dock .dk-strip .gc .nm { padding: 5px 6px 6px; justify-content: center; } .dock .dk-strip .gc .nm i { display: none; }
+.ex.g { grid-column: span 12; background: #ecebe6; padding: 20px; min-height: 0; }
+.ex.g .insp { display: grid; grid-template-columns: minmax(320px, 1.25fr) minmax(200px, 0.8fr) minmax(300px, 1.5fr); gap: 20px 28px; align-items: start; }
+.ex.g .insp-head { flex-wrap: wrap; }
+.gv { background: #fafaf8; border-radius: 8px; overflow: hidden; }
+.gv svg { width: 100%; height: auto; max-height: 520px; display: block; }
+.gv-m { stroke: #c9c8c2; stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.gv-sb { stroke: #c9c8c2; stroke-width: 1px; stroke-dasharray: 3 3; vector-effect: non-scaling-stroke; }
+.gv-t { font-family: var(--mono); fill: #8c8b86; } .gv-t.k { fill: var(--ink); }
+.gv-n { fill: #fafaf8; stroke: var(--ink); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.gv-fill { fill: var(--ink); fill-opacity: 0.1; }
+.ex.g .col { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.ex.g .insp.pickpart .gv path[data-part] { cursor: pointer; }
+.ex.g h2 { font-size: var(--t12); font-weight: 620; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.partb { display: grid; grid-template-columns: 10px auto 1fr; gap: 8px; align-items: baseline; text-align: left; padding: 8px 10px; background: #fafaf8; font-weight: 400; font-size: var(--t12); line-height: 1.3; color: var(--muted); }
+.partb i { width: 10px; height: 10px; border-radius: 999px; display: inline-block; transform: translateY(1px); } .partb b { color: var(--ink); font-weight: 600; font-family: var(--mono); }
+.partb[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--ink); } .partb:disabled { cursor: default; }
+.lat { display: grid; grid-template-columns: repeat(auto-fill, minmax(34px, 1fr)); gap: 0; background: #f1f0ec; border: 1px solid #cdccc6; border-radius: 6px; overflow: hidden; }
+.lc { display: flex; flex-direction: column; padding: 0; border-radius: 0; border: 0 solid #d6d5cf; border-width: 0 1px 1px 0; background: #fafaf8; min-width: 0; transition: none; }
+.lc svg { width: 100%; aspect-ratio: 1 / 1; height: auto; display: block; padding: 5px 4px 1px; } .lc svg path { fill: #8c8b86; }
+.lc span { font: 600 10px/1 var(--ui); padding: 4px 0 5px; background: #ecebe6; color: var(--muted); }
+.lc.sim svg path { fill: var(--ink); } .lc.sim span { background: #1a1a1a; color: #f6f5f2; }
+.lc[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--ink); position: relative; z-index: 1; } .lc:active { transform: none; }
+@media (hover: hover) { .lc:hover { background: #fff; box-shadow: inset 0 0 0 1px var(--ink); position: relative; z-index: 1; } }
+.ex.g .vars { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); } .ex.g .var { background: #fafaf8; } .ex.g .var svg { height: 76px; }
+.var.bad span { color: var(--accent-ink); }
+
+.show b.cur { font-weight: inherit; box-shadow: inset 0 -0.09em 0 currentColor; }
+@media (max-width: 1100px) { .ex.g .insp { grid-template-columns: minmax(260px, 1fr) minmax(200px, 1fr); } .ex.g .insp .col.dn { grid-column: 1 / -1; } }
+@media (max-width: 900px) { .dk-h, .dk-strip { padding-left: 16px; padding-right: 16px; } }
+@media (max-width: 600px) { .ex.g { padding: 12px; } .ex.g .insp { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } button:active { transform: none; } }
 </style>
 <style>html:not([data-ready]) body { visibility: hidden; animation: fintboot 0s 4s forwards; } @keyframes fintboot { to { visibility: visible; } }</style>
@@ -314,18 +354,16 @@ body.drop { outline: none; } body.drop .dropz { background: var(--teal-soft); bo
       <p class="leg" id="qLeg"></p>
       <div class="exs">
         <article class="ex p"><span class="lab" data-t="exP">Панграмма</span><div class="t pg" id="qPang"></div></article>
-        <article class="ex a"><span class="lab" data-t="exA">Статья</span><div class="t hd" id="qLine" contenteditable="plaintext-only" spellcheck="false" aria-label="заголовок, можно править"></div><div class="t bd" id="qBody"></div></article>
-        <article class="ex b"><span class="lab" data-t="exB">Плакат</span><div class="t big" id="qCaps"></div><div class="t sm" id="qPost"></div></article>
+        <article class="ex a" hidden><span class="lab" data-t="exA">Статья</span><div class="t hd" id="qLine" contenteditable="plaintext-only" spellcheck="false" aria-label="заголовок, можно править"></div><div class="t bd" id="qBody"></div></article>
+        <article class="ex b" hidden><span class="lab" data-t="exB">Плакат</span><div class="t big" id="qCaps"></div><div class="t sm" id="qPost"></div></article>
+        <article class="ex g" id="gview"><div class="insp" id="insp"></div></article>
         <article class="ex c"><span class="lab" data-t="exC">Меню</span><div class="t rows" id="qMenu"></div><div class="t sm" id="qSmall"></div></article>
         <article class="ex d"><span class="lab" data-t="exD">Цитата</span><div class="t qt" id="qQuote"></div><div class="t sm" id="qBy"></div></article>
-        <article class="ex e"><span class="lab" data-t="exE">Билет</span><div class="t hd2" id="qTick"></div><div class="t kv" id="qKv"></div></article>
         <article class="ex f"><span class="lab" data-t="exF">Метки</span><div class="t chips" id="qChips"></div></article>
       </div>
-      <div class="fv">
-        <div class="fv-top"><h1 id="qTitle"></h1><span class="cnt" id="qCount"></span></div>
-        <div class="addw" id="qAddW"><div class="fv-sub" id="qAddT"></div><div class="gg add" id="qAdd"></div></div>
-        <div class="fv-sub" id="qAllT"></div>
-        <div class="gg" id="qGrid"></div>
+      <div class="dock" id="dock">
+        <div class="dk-h"><h1 id="qTitle"></h1><span class="cnt" id="qCount"></span></div>
+        <div class="dk-strip"><div class="gg add" id="qAdd"></div><div class="gg" id="qGrid"></div></div>
       </div>
     </div>
     <details class="setd" id="setd"><summary data-t="setOpen">Настройки</summary>
@@ -355,7 +393,6 @@ body.drop { outline: none; } body.drop .dropz { background: var(--teal-soft); bo
       <div class="row"><button data-act="macall" id="qMacAll">Достроить все</button><button class="ghost" data-act="reveal">Папка «готово»</button></div>
     </div>
   </aside>
-  <aside class="drawer right insp" id="inspD" aria-label="буква"><div class="drawer-h"><h2 data-t="letter">Буква</h2><button class="x" data-act="closedrawers" aria-label="закрыть">×</button></div><div id="insp" style="display:flex;flex-direction:column;gap:20px"></div></aside>
 
   <main id="app" hidden>
     <div class="meta" id="metrics"></div>
@@ -2123,6 +2160,61 @@ function create(paper) {
       const cl = v => Math.max(-0.04 * h, Math.min(0.3 * h, v));
       return [cl(R0.L - w.l), cl(R0.R - w.r)];
     }
+    let DN = opt.donor || {};
+    const RAWP = new Map(), dcache = new Map(), DROWS = 48, TROWS = 28;
+    const DCLIP = [[0, 0, 1, 1, 'целиком'], [0, 0, 0.5, 1, 'левая половина'], [0.5, 0, 1, 1, 'правая половина'], [0, 0.5, 1, 1, 'верхняя половина'], [0, 0, 1, 0.5, 'нижняя половина'],
+      [0, 0, 0.62, 1, 'левая часть'], [0.38, 0, 1, 1, 'правая часть'], [0, 0.38, 1, 1, 'верхняя часть'], [0, 0, 1, 0.62, 'нижняя часть']];
+    const DORI = [[1, 1, ''], [-1, 1, ', зеркально'], [1, -1, ', вверх ногами'], [-1, -1, ', повёрнута на 180°']];
+    const dRows = src => {
+      if (dcache.has(src)) return dcache.get(src);
+      const g = G(src); let r = null;
+      if (g && g.bb && g.bb.x1 > g.bb.x0 && g.bb.y1 > g.bb.y0) { const b = g.bb, h = b.y1 - b.y0, rows = []; for (let j = 0; j < DROWS; j++) rows.push(sH(g.cmds, b.y0 + (j + 0.5) / DROWS * h)); r = { b, h, rows }; }
+      dcache.set(src, r); return r;
+    };
+    function dCands(tcmds, src) {
+      const d = dRows(src), tb = tcmds && tcmds.length ? bbox(tcmds) : null; if (!d || !tb) return [];
+      const tw = tb.x1 - tb.x0, th = tb.y1 - tb.y0; if (tw < 1 || th < 1) return [];
+      const trow = []; let tlen = 0;
+      for (let r = 0; r < TROWS; r++) { const sp = sH(tcmds, tb.y0 + (r + 0.5) / TROWS * th); trow.push(sp); for (const s of sp) tlen += s[1] - s[0]; }
+      const list = [], b = d.b;
+      DCLIP.forEach((cl, ci) => {
+        const cx0 = b.x0 + (b.x1 - b.x0) * cl[0], cx1 = b.x0 + (b.x1 - b.x0) * cl[2], cy0 = b.y0 + d.h * cl[1], cy1 = b.y0 + d.h * cl[3];
+        const cut = j => d.rows[j].map(s => [Math.max(s[0], cx0), Math.min(s[1], cx1)]).filter(s => s[1] - s[0] > 0.5);
+        let ix0 = Infinity, ix1 = -Infinity, j0 = -1, j1 = -1;
+        for (let j = 0; j < DROWS; j++) { const y = b.y0 + (j + 0.5) / DROWS * d.h; if (y < cy0 || y > cy1) continue; const sp = cut(j); if (!sp.length) continue; if (j0 < 0) j0 = j; j1 = j; ix0 = Math.min(ix0, sp[0][0]); ix1 = Math.max(ix1, sp[sp.length - 1][1]); }
+        if (j0 < 0) return;
+        const iy0 = Math.max(cy0, b.y0 + j0 / DROWS * d.h), iy1 = Math.min(cy1, b.y0 + (j1 + 1) / DROWS * d.h), cw = ix1 - ix0, chh = iy1 - iy0; if (cw < 1 || chh < 1) return;
+        const sy = th / chh;
+        for (const [mx, my, on] of DORI) for (const fit of ['st', 'l', 'r']) {
+          const sx = fit === 'st' ? tw / cw : sy; if (fit === 'st' && (sx / sy < 0.75 || sx / sy > 1.33)) continue;
+          const X0 = fit === 'r' ? tb.x1 - cw * sx : tb.x0; let inter = 0, clen = 0; const sig = [];
+          for (let r = 0; r < TROWS; r++) {
+            const t = (r + 0.5) / TROWS, yd = my > 0 ? iy0 + t * chh : iy1 - t * chh, j = Math.max(0, Math.min(DROWS - 1, Math.floor((yd - b.y0) / d.h * DROWS)));
+            const sp = cut(j).map(s => mx > 0 ? [X0 + (s[0] - ix0) * sx, X0 + (s[1] - ix0) * sx] : [X0 + (ix1 - s[1]) * sx, X0 + (ix1 - s[0]) * sx]);
+            for (const s of sp) { clen += s[1] - s[0]; sig.push(Math.round((s[0] - tb.x0) / tw * 14), Math.round((s[1] - tb.x0) / tw * 14)); for (const q of trow[r]) inter += Math.max(0, Math.min(s[1], q[1]) - Math.max(s[0], q[0])); }
+            sig.push(-99);
+          }
+          const un = tlen + clen - inter; if (un <= 0 || !clen) continue;
+          const pen = 1 - 0.35 * Math.min(1, Math.abs(Math.log(sy)) + Math.abs(Math.log(sx / sy)));
+          list.push({ src, ci, mx, my, fit, score: inter / un * pen, sig: sig.join(','), name: src + ': ' + cl[4] + on, box: [cx0, cy0, cx1, cy1] });
+        }
+      });
+      list.sort((p, q) => q.score - p.score);
+      const seen = new Set(), outL = [];
+      for (const c of list) { if (seen.has(c.sig)) continue; seen.add(c.sig); outL.push(c); if (outL.length >= 8) break; }
+      return outL;
+    }
+    function dItem(c, tcmds) {
+      const g = G(c.src), tb = bbox(tcmds); if (!g || !tb) return null;
+      let it = X(g.it(), box(c.box[0] - 1, c.box[1] - 1, c.box[2] + 1, c.box[3] + 1)); if (isEmpty(it)) return null;
+      let q = bb(it);
+      if (c.mx < 0) it = mirX(it, (q.x0 + q.x1) / 2);
+      if (c.my < 0) it = flipY(it, (q.y0 + q.y1) / 2);
+      q = bb(it); if (q.w < 1 || q.h < 1) return null;
+      const sy = (tb.y1 - tb.y0) / q.h, sx = c.fit === 'st' ? (tb.x1 - tb.x0) / q.w : sy;
+      it = scl(it, sx, sy, q.x0, q.y0); q = bb(it);
+      return move(it, c.fit === 'r' ? tb.x1 - q.x1 : tb.x0 - q.x0, tb.y0 - q.y0);
+    }
     const done = new Map();
     const usable = r => r && !r.error && r.cmds.length && r.shape ? r : null;
     function built(ch) {
@@ -2142,14 +2234,29 @@ function create(paper) {
         return { ch, pieces, shape: g.it(), ucmds: g.cmds, cmds: g.raw.map(c => Object.assign({}, c)), adv: g.adv, recipe, conf, notes: [], sb: [{ abs: g.bb.x0 }, { abs: g.adv - g.bb.x1 }], ptsRaw: 0, pts: countPts(g.raw), layer: conf };
       };
       if (own) return asIs(own, 'уже есть в шрифте', 'уже есть в шрифте', 'own');
-      const pick = forced !== undefined ? forced : 'ФЗб'.includes(ch) ? 0 : opt.pick && opt.pick[ch];
+      const dn = forced === undefined ? DN[ch] : null;
+      const pick = forced !== undefined ? forced : dn && dn.parts ? dn.alt || 0 : 'ФЗб'.includes(ch) ? 0 : opt.pick && opt.pick[ch];
       if (pick && ALT[ch] && ALT[ch][pick - 1]) { try { res = ALT[ch][pick - 1][1](); } catch (e) { res = null; } if (res) { res.alt = pick; res.notes = (res.notes || []).filter(n => !/^запасной путь/.test(n)); } }
       if (!res && COPY[ch] && G(COPY[ch]) && !pick) return asIs(G(COPY[ch]), 'копия', 'копия ' + COPY[ch], 'copy');
       if (!res && R[ch]) res = R[ch]();
+      if (res && forced === undefined) RAWP.set(ch, res.pieces.map(p => toCmds(p.item)));
+      let donored = false;
+      if (res && dn && dn.parts) {
+        const raws = RAWP.get(ch) || [], names = [];
+        for (const k in dn.parts) {
+          const i = +k, sp = dn.parts[k], raw = raws[i]; if (!raw || !raw.length || !res.pieces[i]) continue;
+          const c = dCands(raw, sp.src)[sp.k || 0]; let it = null; try { it = c && dItem(c, raw); } catch (e) { it = null; }
+          if (!it || isEmpty(it)) continue;
+          if (!donored) res.pieces = res.pieces.slice();
+          res.pieces[i] = piece(sp.src, 'донор по выбору: ' + c.name.replace(/^.*?: /, ''), it); names.push(sp.src); donored = true;
+        }
+        if (donored) { res.recipe += ' · донор ' + names.join(', '); if (res.conf === 'high') res.conf = 'mid'; res.noMend = true; }
+      }
       const crumb = Math.pow(stemL.w * 0.25, 2);
       const fuse = r => { const raw = r.pieces.reduce((a, p) => U(a, p.item), empty()); const clean = idealize(raw, zones, crumb, stemL.w * 0.04); return { clean, cmds: roundCmds(toCmds(clean)) }; };
       let f = res && fuse(res);
-      if (f && f.cmds.length && !pick && !whole(ch, f.cmds)) {
+      if (donored && f && f.cmds.length && !whole(ch, f.cmds)) { res.conf = 'low'; res.notes = (res.notes || []).concat(['штрихи слиплись, просвет закрыт: рисовать руками']); }
+      if (f && f.cmds.length && !pick && !donored && !whole(ch, f.cmds)) {
         let got = false;
         for (let i = 0; i < (ALT[ch] || []).length && !got; i++) {
           let r2 = null, f2 = null; try { r2 = ALT[ch][i][1](); f2 = r2 && fuse(r2); } catch (e) { r2 = null; }
@@ -2157,6 +2264,7 @@ function create(paper) {
           if (r2 && f2 && f2.cmds.length && whole(ch, f2.cmds)) { res = r2; f = f2; res.alt = i + 1; res.notes = (res.notes || []).concat(['основной рецепт слипся, взят запасной: ' + ALT[ch][i][0]]); got = true; }
         }
         if (!got) { res.conf = 'low'; res.notes = (res.notes || []).concat(['штрихи слиплись, просвет закрыт: рисовать руками']); }
+        else RAWP.set(ch, res.pieces.map(p => toCmds(p.item)));
       }
       if (f && f.cmds.length && res.conf !== 'low' && res.conf !== 'copy' && res.conf !== 'own' && !holesOk(ch, f.cmds)) { res.conf = 'low'; res.notes = (res.notes || []).concat(['число замкнутых просветов не как у этой буквы: проверить глазами']); }
       if (R2[ch] && (!f || !f.cmds.length)) { const r2 = R2[ch](); if (r2) { const f2 = fuse(r2); if (f2.cmds.length) { res = r2; f = f2; } } }
@@ -2263,6 +2371,22 @@ function create(paper) {
     function variants(ch) {
       return recipesOf(ch).map(([name], i) => { let r = null; try { r = i ? buildOne(ch, i) : built(ch); } catch (e) { r = null; } return r && r.cmds && r.cmds.length ? Object.assign({ name, i }, r) : null; }).filter(Boolean);
     }
+    const DLAT = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'];
+    function donorScan(ch, i) {
+      const raw = (RAWP.get(ch) || [])[i]; if (!raw || !raw.length) return [];
+      return DLAT.map(src => { const c = dCands(raw, src)[0]; return c ? { src, score: c.score } : null; }).filter(Boolean).sort((p, q) => q.score - p.score);
+    }
+    function donorTry(ch, i, src, alt, n = 4) {
+      const raw = (RAWP.get(ch) || [])[i]; if (!raw || !raw.length) return [];
+      const keep = DN, base = keep[ch] && keep[ch].parts || {}, res = [];
+      dCands(raw, src).slice(0, n).forEach((c, k) => {
+        DN = Object.assign({}, keep, { [ch]: { alt: alt || 0, parts: Object.assign({}, base, { [i]: { src, k } }) } });
+        let r = null; try { r = buildOne(ch); } catch (e) { r = null; }
+        if (r && r.cmds && r.cmds.length) res.push(Object.assign({ k, name: c.name, score: c.score, bad: (r.notes || []).some(t => /слиплись|просветов/.test(t)) }, r));
+      });
+      DN = keep;
+      return res;
+    }
     function rebuild(ch, knobs, pick) {
       KN = knobs || {}; done.clear(); FAST = true;
       let r = null;
@@ -2270,7 +2394,7 @@ function create(paper) {
       KN = opt.knobs || {}; done.clear(); FAST = false;
       return r && r.cmds && r.cmds.length ? r : null;
     }
-    return { M, letters, atlas, G, variants, rebuild, flat: overlapFree, recipeCount: ch => recipesOf(ch).length, recipeNames: ch => recipesOf(ch).map(r => r[0]), _dbg: () => ({ EA, FA, b: bAnat(), toCmds, solid, fromCmds, redraw, isoLoops, hair, freeKinds, seamsOf }) };
+    return { M, letters, atlas, G, variants, rebuild, donorScan, donorTry, flat: overlapFree, recipeCount: ch => recipesOf(ch).length, recipeNames: ch => recipesOf(ch).map(r => r[0]), _dbg: () => ({ EA, FA, b: bAnat(), toCmds, solid, fromCmds, redraw, isoLoops, hair, freeKinds, seamsOf }) };
   }
   function splitContours(cmds) { const out = []; let cur = null; for (const c of cmds) { if (c.type === 'M') { cur = [c]; out.push(cur); } else if (cur) cur.push(c); } return out; }
   return { analyze, fromCmds, toCmds };
@@ -2782,8 +2906,8 @@ root.SvgPath = { parseShape, parsePath };
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const Fk = window.Frank, F = Fk.create(window.paper);
 const st = { font: null, res: null, mode: 'parts', filter: 'all', size: 56, hl: true, squint: false, face: null, file: '', pick: {}, open: null, pmode: 'none',
-  brain: null, brainOn: false, th: null, res0: null, buf: null, exam: null, view: 'quick', qhl: true, saved: null, job: null, sample: 'Їжак і ґава їдуть до Європи', qsize: 104, sel: null, was: 0, hide: '', demo: false, lang: 'ru', web: false, set: { scope: 'missing', ru: '1', dots: 'ua', up: 'mid', suffix: 'UA' } };
-const VERSION = '0.9.1';
+  brain: null, brainOn: false, th: null, res0: null, buf: null, exam: null, view: 'quick', qhl: true, saved: null, job: null, sample: 'Їжак і ґава їдуть до Європи', qsize: 104, sel: null, was: 0, hide: '', demo: false, lang: 'ru', web: false, donor: {}, donors: {}, dn: { on: false, part: null, src: null, scan: null, tries: null }, set: { scope: 'missing', ru: '1', dots: 'ua', up: 'mid', suffix: 'UA' } };
+const VERSION = '0.9.2';
 const Br = window.Brain;
 const CONF = { own: 'есть в шрифте', copy: 'копия', high: 'почти готово', mid: 'проверить стыки', low: 'доводка руками', none: 'рисовать', drawn: 'нарисовано' };
 const WORK = new Set(['mid', 'low', 'none']);
@@ -2824,6 +2948,12 @@ const TX = {
   heroP: ['Открой .ttf или .otf. FINT достроит Ґ, Є, І, Ї из деталей самого шрифта и сохранит кернинг и подстановки. Шрифт остаётся на этом компьютере.', 'Open a .ttf or .otf. FINT adds Ґ, Є, І, Ї built from the font’s own parts and keeps kerning and features. It runs in your browser: the font stays on your computer.', 'Відкрий .ttf або .otf. FINT додасть Ґ, Є, І, Ї з деталей самого шрифту і збереже кернінг та підстановки. Усе рахується в браузері: шрифт лишається на твоєму компʼютері.'],
   dropB: ['Перетащи шрифт сюда', 'Drop a font here', 'Перетягни шрифт сюди'], dropS: ['.ttf или .otf · или нажми и выбери файл', '.ttf or .otf · or click to choose a file', '.ttf або .otf · або натисни й обери файл'],
   exA: ['Статья', 'Article', 'Стаття'], exB: ['Плакат', 'Poster', 'Плакат'], exC: ['Меню', 'Menu', 'Меню'], exP: ['Панграмма', 'Pangram', 'Панграма'], exD: ['Цитата', 'Quote', 'Цитата'], exE: ['Билет', 'Ticket', 'Квиток'], exF: ['Метки', 'Tags', 'Мітки'],
+  dnBtn: ['Выбрать донора', 'Choose a donor', 'Обрати донора'], dnBack: ['Вернуть как было', 'Restore the letter', 'Повернути як було'], partsT: ['Детали', 'Parts', 'Деталі'],
+  dnPart: ['Нажми на деталь буквы: её и заменим', 'Click a part of the letter: that is the one to replace', 'Натисни на деталь літери: її й замінимо'],
+  dnFrom: ['Откуда взять деталь. Тёмным отмечены буквы с похожей формой', 'Where to take the part from. Dark labels mark letters with a similar shape', 'Звідки взяти деталь. Темним позначено літери зі схожою формою'],
+  dnTry: ['Попытки. Нажми: буква поменяется во всём шрифте', 'Attempts. Click one: the letter changes across the whole font', 'Спроби. Натисни: літера зміниться в усьому шрифті'],
+  dnBad: ['брак', 'flawed', 'брак'], dnNone: ['Из этой буквы ничего не собралось, попробуй другую', 'Nothing could be built from this letter, try another one', 'З цієї літери нічого не зібралося, спробуй іншу'],
+  dnIntro: ['Деталь буквы можно взять из другой латинской буквы этого шрифта', 'A part of this letter can be taken from another Latin letter of the font', 'Деталь літери можна взяти з іншої латинської літери цього шрифту'],
   sLoad: ['', 'Loading the font writer, about 10 MB, first time only', 'Завантажую записувач шрифту, близько 10 МБ, лише першого разу'], sWrite: ['', 'Writing the font', 'Записую шрифт'],
   sDone: ['', 'Saved to your downloads: ', 'Збережено в завантаження: '], sDemo: ['', 'This is the demo font. Open your own font to save it', 'Це шрифт для прикладу. Відкрий свій, щоб зберегти'],
   sPlain: ['', 'The writer did not load, so the font was rebuilt the simple way: kerning and features of the source are not in this file', 'Записувач не завантажився, шрифт зібрано простим способом: кернінгу й підстановок джерела в цьому файлі немає'],
@@ -2851,7 +2981,7 @@ async function openFile(file, opts = {}) {
     say('Читаю ' + file.name);
     st.buf = await file.arrayBuffer();
     const font = Fk.parseFont(opentype, st.buf.slice(0));
-    st.pick = {}; st.open = null; st.exam = null; st.demo = !!opts.demo; st.hide = opts.demo ? 'ҐґЄєІіЇї' : ''; st.was = 0;
+    st.pick = {}; st.open = null; st.exam = null; st.donor = st.donors[file.name] || (st.donors[file.name] = {}); dnReset(); st.demo = !!opts.demo; st.hide = opts.demo ? 'ҐґЄєІіЇї' : ''; st.was = 0;
     try { const fo = new FontFace('FrankOrig', st.buf.slice(0)); await fo.load(); if (st.orig) document.fonts.delete(st.orig); document.fonts.add(fo); st.orig = fo; } catch (e) { st.orig = null; }
     st.font = font; st.file = file.name;
     const ms = await assemble();
@@ -2893,7 +3023,7 @@ function renderQuick() {
   $('#qNewTitle').textContent = neu.length ? T('newN') + neu.filter(l => !/[ʼ₴№]/.test(l.ch)).length : T('newNone');
   $('#qOrig').hidden = !st.demo;
   document.querySelectorAll('[data-qwas]').forEach(x => x.setAttribute('aria-pressed', String(+x.dataset.qwas === st.was)));
-  if (!neu.some(l => l.ch === st.sel)) st.sel = (neu.find(l => WORK.has(l.conf) && l.layer === 'frank' && !/[ʼ₴№]/.test(l.ch)) || neu.find(l => l.layer === 'frank' && !/[ʼ₴№]/.test(l.ch)) || neu[0] || {}).ch || null;
+  if (!letters.some(l => l.ch === st.sel && l.cmds.length)) { const pool = neu.filter(l => l.layer === 'frank' && !/[ʼ₴№]/.test(l.ch)), from = pool.length ? pool : neu.length ? neu : letters.filter(l => l.cmds.length); st.sel = (from[Math.floor(Math.random() * from.length)] || {}).ch || null; }
   const cellOf = l => `<button class="cell ${l.layer === 'copy' ? 'high' : l.conf}" aria-current="${l.ch === st.sel}" data-cell="${esc(l.ch)}" title="${esc(l.ch)}${st.lang === 'ru' ? ' · ' + esc(l.recipe) + ' · ' + esc(CONF[l.conf] || l.conf) : ''}">${cellSVG(l.cmds, l.adv, M)}<span>${esc(l.ch)}</span></button>`;
   const isAux = l => /[ʼ₴№]/.test(l.ch), lets = neu.filter(l => !isAux(l)), aux = neu.filter(isAux);
   $('#qCells').innerHTML = lets.map(cellOf).join('');
@@ -2912,26 +3042,40 @@ function drawer(id) {
   for (const d of document.querySelectorAll('.drawer')) d.classList.toggle('open', d.id === id);
   $('#scrim').classList.toggle('on', !!id);
 }
+function dnReset(on) { st.dn = { on: !!on, part: null, src: null, scan: null, tries: null }; }
+function dnPart(i) {
+  const l = st.res.letters.find(x => x.ch === st.sel); if (!l) return;
+  const cur = st.donor[l.ch] && st.donor[l.ch].parts[i];
+  st.dn = { on: true, part: i, src: cur ? cur.src : null, scan: st.res.donorScan(l.ch, i), tries: cur ? st.res.donorTry(l.ch, i, cur.src, l.alt) : null };
+}
 function renderInsp() {
-  const el = $('#insp'); if (!st.res) return;
+  const el = $('#insp'), pn = $('#gview'); if (!st.res || !el) return;
   const { M, letters } = st.res, l = letters.find(x => x.ch === st.sel);
-  if (!l) { el.innerHTML = '<div class="insp-card"><p class="hint">В этом шрифте достраивать нечего</p></div>'; return; }
-  if (st.lang !== 'ru') {
-    const src = [...new Set((l.pieces || []).map(p => p.src))].join(' + ');
-    el.innerHTML = `<div class="insp-card"><div class="insp-head"><span class="ch">${esc(l.ch)}</span><code>U+${hex(l.ch.codePointAt(0))}</code><span class="pill ${l.layer === 'copy' ? 'high' : l.conf}">${l.layer === 'copy' ? T('pHigh') : T(l.conf === 'high' ? 'pHigh' : l.conf === 'mid' ? 'pMid' : 'pLow')}</span></div>
-      <div class="glyph">${glyphSVG(l, M)}</div><p class="recipe">${l.layer === 'copy' ? T('copyOf') : T('builtFrom')} ${esc(src)}</p></div>`;
-    return;
+  pn.hidden = !l; if (!l) { el.innerHTML = ''; return; }
+  const ru = st.lang === 'ru', built = l.layer === 'frank' || l.layer === 'drawn', dn = st.dn, has = st.donor[l.ch];
+  const srcs = [...new Set((l.pieces || []).map(p => p.src))].join(' + ');
+  const pill = `<span class="pill ${l.layer === 'copy' ? 'high' : l.conf}">${l.layer === 'copy' ? (ru ? 'копия' : T('pHigh')) : ru ? CONF[l.conf] || l.conf : T(l.conf === 'high' ? 'pHigh' : l.conf === 'mid' ? 'pMid' : 'pLow')}</span>`;
+  const col1 = `<div class="col"><div class="insp-head"><span class="ch">${esc(l.ch)}</span><code>U+${hex(l.ch.codePointAt(0))}</code>${pill}</div><div class="gv">${editSVG(l, M, dn.on ? dn.part : undefined)}</div></div>`;
+  const parts = built ? l.pieces.map((p, i) => `<button class="partb" data-part="${i}" aria-pressed="${dn.on && dn.part === i}"${dn.on ? '' : ' disabled'}><i style="background:var(--p${i % 8})"></i><b>${esc(p.src)}</b><span>${ru ? esc(p.part) : ''}</span></button>`).join('') : '';
+  const notes = ru ? (l.notes || []).map(t => `<p class="note">${esc(t)}</p>`).join('') : '';
+  const n = st.res.recipeCount(l.ch);
+  const col2 = `<div class="col"><p class="recipe">${ru ? esc(l.recipe) : (l.layer === 'copy' ? T('copyOf') : T('builtFrom')) + ' ' + esc(srcs)}</p>${parts}${notes}
+    <div class="row">${built ? `<button class="${dn.on ? 'ghost' : 'primary'} small" data-act="donor" aria-pressed="${dn.on}">${T('dnBtn')}</button>` : ''}${has ? `<button class="ghost small" data-act="undonor">${T('dnBack')}</button>` : ''}${ru ? '<button class="ghost small" data-act="tolab">Открыть в мастерской</button>' : ''}</div>
+    ${ru && n > 1 && l.layer !== 'copy' && !dn.on ? `<h2>Другие рецепты</h2><div class="vars">${varsHTML(l.ch)}</div>` : ''}</div>`;
+  let col3 = '';
+  if (dn.on && built) {
+    if (dn.part === null) col3 = `<p class="hint">${T('dnIntro')}. ${T('dnPart')}</p>`;
+    else {
+      const top = new Set((dn.scan || []).slice(0, 8).map(x => x.src)), ok = new Set((dn.scan || []).map(x => x.src));
+      const lat = LATIN.filter(ch => ok.has(ch)).map(ch => { const g = st.font.charToGlyph(ch); return `<button class="lc${top.has(ch) ? ' sim' : ''}" data-donor="${ch}" aria-pressed="${dn.src === ch}" title="${ch}">${cellSVG(g.path.commands, g.advanceWidth, M)}<span>${ch}</span></button>`; }).join('');
+      const cur = has && has.parts[dn.part];
+      const tries = dn.src === null ? '' : !dn.tries || !dn.tries.length ? `<p class="hint">${T('dnNone')}</p>` :
+        `<p class="hint">${T('dnTry')}</p><div class="vars">${dn.tries.map(v => `<button class="var${v.bad ? ' bad' : ''}" data-try="${v.k}" aria-pressed="${!!cur && cur.src === dn.src && cur.k === v.k}" title="${ru ? esc(v.name) : ''}">${glyphSVG(Object.assign({}, v, { layer: 'clean' }), M)}<span>${esc(dn.src)} · ${v.k + 1}${v.bad ? ' · ' + T('dnBad') : ''}</span></button>`).join('')}</div>`;
+      col3 = `<p class="hint">${T('dnFrom')}</p><div class="lat">${lat}</div>${tries}`;
+    }
   }
-  const n = st.res.recipeCount(l.ch), built = l.layer === 'frank' || l.layer === 'drawn';
-  const parts = built ? `<ul class="parts">${l.pieces.map((p, i) => `<li><i style="background:var(--p${i % 8})"></i><b>${esc(p.src)}</b><span>${esc(p.part)}</span></li>`).join('')}</ul>` : '';
-  const notes = (l.notes || []).map(t => `<p class="note">${esc(t)}</p>`).join('');
-  el.innerHTML = `<div class="insp-card">
-    <div class="insp-head"><span class="ch">${esc(l.ch)}</span><code>U+${hex(l.ch.codePointAt(0))}</code><span class="pill ${l.layer === 'copy' ? 'high' : l.conf}">${l.layer === 'copy' ? 'копия' : CONF[l.conf] || l.conf}</span></div>
-    <div class="glyph">${glyphSVG(l, M)}</div>
-    <p class="recipe">${esc(l.recipe)}</p>${parts}${notes}
-    <p class="hint">ширина ${num(l.adv)} · точек ${l.pts || 0}</p></div>` +
-    (n > 1 && l.layer !== 'copy' ? `<h2>Другие рецепты</h2><div class="insp-card"><div class="vars">${varsHTML(l.ch)}</div><p class="hint">Нажми на вариант: буква пересоберётся во всём шрифте</p></div>` : '') +
-    `<button class="ghost small" data-act="tolab">Открыть в мастерской</button>`;
+  el.className = 'insp' + (dn.on ? ' pickpart' : '');
+  el.innerHTML = col1 + col2 + `<div class="col dn">${col3}</div>`;
 }
 const BODY = 'Їжак з Єгипту привіз ґудзик, і ґазда довго їздив на зʼїзд ковалів у Європу. Її ґанок пахне мʼятою, а в ґратах сміється сонце: є що згадати, є кого любити, є куди їхати.';
 const SMALLT = 'вул. Ґонти, 7 · їдальня «Єва» працює з 8:00 · зʼїзд ліворуч';
@@ -2945,7 +3089,8 @@ function renderQSpec() {
   if (!st.res) return;
   const neu = new Set(st.res.letters.filter(l => l.layer !== 'own' && l.cmds.length).map(l => l.ch));
   const eye = new Set(st.res.letters.filter(l => l.layer !== 'own' && WORK.has(l.conf)).map(l => l.ch));
-  const mark = t => [...t].map(ch => (st.hadCyr ? neu.has(ch) : eye.has(ch)) ? `<u>${esc(ch)}</u>` : esc(ch)).join('');
+  const curCh = st.sel, mk0 = ch => (st.hadCyr ? neu.has(ch) : eye.has(ch)) ? `<u>${esc(ch)}</u>` : esc(ch);
+  const mark = t => [...t].map(ch => ch === curCh ? `<b class="cur">${mk0(ch)}</b>` : mk0(ch)).join('');
   const line = $('#qLine'), stage = $('#stage');
   stage.classList.toggle('hl', st.qhl && st.was === 0); stage.classList.toggle('was', st.was === 1); stage.classList.toggle('orig', st.was === 2);
   stage.classList.toggle('allnew', !st.hadCyr);
@@ -2961,10 +3106,7 @@ function renderQSpec() {
     return `<button class="gc ${cls}" data-cell="${esc(ch)}" aria-current="${ch === st.sel}" title="${esc(ch)} · U+${hex(ch.codePointAt(0))}">${cellSVG(cmds, adv, M)}<span class="nm"><b>${esc(ch)}</b>${word ? `<i class="w">${word}</i>` : `<i>${hex(ch.codePointAt(0))}</i>`}</span></button>`;
   };
   const added = chars.filter(ch => by.get(ch).layer !== 'own'), strip = st.hadCyr && added.length && added.length < chars.length / 2;
-  $('#qAddW').hidden = !strip;
   $('#qAdd').innerHTML = strip ? added.map(ch => cell(ch, true)).join('') : '';
-  $('#qAddT').textContent = strip ? T('addT', added.length) : '';
-  $('#qAllT').textContent = strip ? T('allT') : '';
   $('#qGrid').innerHTML = chars.map(ch => cell(ch, false)).join('');
   const key = st.was === 1 ? (st.hadCyr ? added[0] : null) : st.hadCyr ? added[0] : [...eye][0];
   const keyCh = added.includes('Ґ') && (st.hadCyr || st.was === 1) ? 'Ґ' : key;
@@ -2973,8 +3115,7 @@ function renderQSpec() {
   $('#qCount').textContent = st.lang === 'ru' ? `новых ${nNew} из ${chars.length}` : st.lang === 'uk' ? `нових ${nNew} з ${chars.length}` : `${nNew} new of ${chars.length}`;
   $('#qBody').innerHTML = mark(BODY); $('#qSmall').innerHTML = mark(SMALLT); $('#qPost').innerHTML = mark(POST_T);
   $('#qCaps').innerHTML = CAPS_T.map(mark).join('<br>');
-  $('#qPang').innerHTML = mark(PANG_T); $('#qQuote').innerHTML = mark(QUOTE_T); $('#qBy').innerHTML = mark(BY_T); $('#qTick').innerHTML = mark(TICK_T);
-  $('#qKv').innerHTML = KV_T.map(([k, v]) => `<div><span>${mark(k)}</span>${mark(v)}</div>`).join('');
+  $('#qPang').innerHTML = mark(PANG_T); $('#qQuote').innerHTML = mark(QUOTE_T); $('#qBy').innerHTML = mark(BY_T);
   $('#qChips').innerHTML = CHIPS_T.map(t => `<span>${mark(t)}</span>`).join('');
   $('#qMenu').innerHTML = MENU_T.map(([a, b]) => `<div><span>${mark(a)}</span><span>${b}</span></div>`).join('');
 }
@@ -3063,7 +3204,7 @@ function reanalyze() {
 function build() {
   const o = st.set, UP = { low: [0.12, 0.16], mid: [0.19, 0.24], high: [0.27, 0.33] }[o.up] || [0.19, 0.24], gap = o.dots === 'lat' ? 1 : 0.45;
   const knobs = Object.assign({}, st.th && st.brainOn ? st.th.knobs : {}, { 'Ї.gap': gap, 'ї.gap': gap, 'Ґ.up': UP[0], 'ґ.up': UP[1] }), pick = Object.assign({}, st.th && st.brainOn ? st.th.pick : {}, st.pick);
-  st.res = F.analyze(st.font, o.scope === 'all' ? { pick, knobs, forceAll: true } : { pick, knobs, hide: st.hide });
+  st.res = F.analyze(st.font, o.scope === 'all' ? { pick, knobs, donor: st.donor, forceAll: true } : { pick, knobs, donor: st.donor, hide: st.hide });
   st.rebuilt = o.scope === 'all';
   if (o.ru === '0') st.res.letters = st.res.letters.filter(l => l.layer === 'own' || !'ЁёЪъЫыЭэ'.includes(l.ch));
   if (st.exam) st.exam.s1 = examScore(st.res);
@@ -3149,7 +3290,35 @@ async function toggleExam() {
   const chs = Object.keys(st.exam.s0), a = chs.reduce((s, ch) => s + st.exam.s0[ch], 0) / chs.length, b = chs.reduce((s, ch) => s + (st.exam.s1[ch] || 0), 0) / chs.length;
   say(`Экзамен: совпадение с настоящей кириллицей без мозга ${dec(a)}, с мозгом ${dec(b)}. Пунктиром на карточках настоящая буква`);
 }
-function glyphSVG(l, M) {
+function editSVG(l, M, selPart) {
+  const { top, bot } = frameOf(M), adv = Math.max(l.adv || M.cap * 0.6, 1), u = M.upm, fs = u * 0.034;
+  const b = l.cmds.length ? Fk.bbox(l.cmds) : null, side = u * 0.28, foot = fs * 2.4;
+  const x0 = Math.min(0, b ? b.x0 : 0) - side, x1 = Math.max(adv, b ? b.x1 : adv) + side, W = x1 - x0, H = top - bot + foot;
+  const f = (x, y) => [x - x0, top - y], r0 = v => Math.round(v);
+  const lines = [[ru => ru ? 'верхние выносные' : 'ascender', M.asc], [ru => ru ? 'прописные' : 'cap height', M.cap], [ru => ru ? 'строчные' : 'x-height', M.xh], [ru => ru ? 'линия шрифта' : 'baseline', 0], [ru => ru ? 'нижние выносные' : 'descender', M.desc]];
+  const ru = st.lang === 'ru'; let last = Infinity, s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(l.ch)}">`;
+  for (const [nm, y] of lines) {
+    if (!(y <= top && y >= bot)) continue;
+    if (nm === lines[0][0] && Math.abs(M.asc - M.cap) < fs * 1.3) continue;
+    s += `<line class="gv-m" x1="0" x2="${W}" y1="${top - y}" y2="${top - y}"/>`;
+    if (last - y > fs * 1.3) { s += `<text class="gv-t" x="${fs * 0.6}" y="${top - y - fs * 0.35}" font-size="${fs}">${nm(ru)}</text><text class="gv-t" x="${W - fs * 0.6}" y="${top - y - fs * 0.35}" font-size="${fs}" text-anchor="end">${r0(y)}</text>`; last = y; }
+  }
+  s += `<line class="gv-sb" x1="${-x0}" x2="${-x0}" y1="0" y2="${top - bot}"/><line class="gv-sb" x1="${adv - x0}" x2="${adv - x0}" y1="0" y2="${top - bot}"/>`;
+  if (l.cmds.length) {
+    const parts = (l.layer === 'frank' || l.layer === 'drawn') && l.pieces && l.pieces.length;
+    if (parts) s += l.pieces.map((p, i) => `<path data-part="${i}" d="${Fk.toD(p.cmds, f)}" fill="var(--p${i % 8})" fill-opacity="${selPart === i ? 0.9 : selPart === null || selPart === undefined ? 0.42 : 0.2}"/>`).join('');
+    else s += `<path class="gv-fill" d="${Fk.toD(l.cmds, f)}"/>`;
+    s += `<path class="gl-edge" d="${Fk.toD(l.cmds, f)}"/>`;
+    const q = u * 0.009; let n = 0, dots = '';
+    for (const c of l.cmds) if (c.type !== 'Z' && c.x !== undefined && n++ < 400) { const [x, y] = f(c.x, c.y); dots += `<rect class="gv-n" x="${x - q}" y="${y - q}" width="${q * 2}" height="${q * 2}"/>`; }
+    s += dots;
+  } else s += `<rect class="gl-empty" x="${-x0 + adv * 0.1}" y="${top - M.cap}" width="${adv * 0.8}" height="${M.cap}"/>`;
+  const ty = top - bot + fs * 1.55;
+  if (b) s += `<text class="gv-t" x="${-x0 - fs * 0.5}" y="${ty}" font-size="${fs}" text-anchor="end">${r0(b.x0)}</text><text class="gv-t" x="${adv - x0 + fs * 0.5}" y="${ty}" font-size="${fs}">${r0(adv - b.x1)}</text>`;
+  s += `<text class="gv-t k" x="${adv / 2 - x0}" y="${ty}" font-size="${fs}" text-anchor="middle">${r0(adv)}</text>`;
+  return s + '</svg>';
+}
+function glyphSVG(l, M, selPart) {
   const { top, bot } = frameOf(M), adv = Math.max(l.adv || M.cap * 0.6, 1);
   const b = l.cmds.length ? Fk.bbox(l.cmds) : null, pad = M.upm * 0.06;
   const x0 = Math.min(0, b ? b.x0 : 0) - pad, x1 = Math.max(adv, b ? b.x1 : adv) + pad, W = x1 - x0, H = top - bot;
@@ -3158,7 +3327,7 @@ function glyphSVG(l, M) {
   let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(l.ch)}">${ln(0)}${ln(M.xh)}${ln(M.cap)}<rect class="gl-adv" x="${-x0}" y="${top - M.cap * 1.1}" width="${adv}" height="${M.cap * 1.1}"/>`;
   if (!l.cmds.length) s += `<rect class="gl-empty" x="${-x0 + adv * 0.1}" y="${top - M.cap}" width="${adv * 0.8}" height="${M.cap}"/>`;
   else if (st.mode === 'parts' && (l.layer === 'frank' || l.layer === 'drawn') && l.pieces.length > 1) {
-    s += l.pieces.map((p, i) => `<path d="${Fk.toD(p.cmds, f)}" fill="var(--p${i % 8})" fill-opacity="0.5"/>`).join('');
+    s += l.pieces.map((p, i) => `<path data-part="${i}" d="${Fk.toD(p.cmds, f)}" fill="var(--p${i % 8})" fill-opacity="${selPart === i ? 0.95 : selPart === null || selPart === undefined ? 0.5 : 0.28}"/>`).join('');
     s += `<path class="gl-edge" d="${Fk.toD(l.cmds, f)}"/>`;
     if (l.seam) { const rr = M.upm * 0.035, ring = (q, c) => { const [x, y] = f(q.x + (M.slant || 0) * q.y, q.y); return `<circle class="${c}" cx="${x}" cy="${y}" r="${rr}"/>`; }; s += l.seam.fixed.map(q => ring(q, 'gl-fix')).join('') + l.seam.left.map(q => ring(q, 'gl-left')).join(''); }
   } else s += `<path class="gl-ink" d="${Fk.toD(l.cmds, f)}"/>`;
@@ -3476,7 +3645,7 @@ picker.addEventListener('change', () => { const f = picker.files[0]; picker.valu
 document.addEventListener('click', e => {
   const c = e.target.closest('[data-cell]');
   if (c) {
-    if (c.closest('#quick')) { st.sel = c.dataset.cell; document.querySelectorAll('#quick .gc, #quick .cell').forEach(x => x.setAttribute('aria-current', String(x === c))); renderInsp(); drawer('inspD'); return; }
+    if (c.closest('#quick')) { st.sel = c.dataset.cell; dnReset(); renderQSpec(); renderInsp(); const gv = $('#gview'), r = gv.getBoundingClientRect(), dock = $('#dock').offsetHeight; if (r.top < 0 || r.top + Math.min(r.height, 260) > innerHeight - dock) scrollTo({ top: scrollY + r.top - 16, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); return; }
     const id = 'g-' + hex(c.dataset.cell.codePointAt(0));
     if (!document.getElementById(id)) { st.filter = 'all'; $$('[data-filter]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.filter === 'all'))); renderGrid(); }
     const card = document.getElementById(id); if (!card) return;
@@ -3484,11 +3653,20 @@ document.addEventListener('click', e => {
     card.classList.add('flash'); setTimeout(() => card.classList.remove('flash'), 1400);
     return;
   }
-  const b = e.target.closest('[data-act],[data-mode],[data-filter],[data-size],[data-hl],[data-pick],[data-rec],[data-var],[data-squint],[data-pmode],[data-brain],[data-view],[data-qhl],[data-qsize],[data-qwas],[data-lang],[data-set]'); if (!b) return;
-  if (b.dataset.set !== undefined) { st.set[b.dataset.set] = b.dataset.v; saveSet(); syncSet(); if (st.res) { st.sel = null; reanalyze(); } return; }
+  const b = e.target.closest('[data-act],[data-mode],[data-filter],[data-size],[data-hl],[data-pick],[data-rec],[data-var],[data-part],[data-donor],[data-try],[data-squint],[data-pmode],[data-brain],[data-view],[data-qhl],[data-qsize],[data-qwas],[data-lang],[data-set]'); if (!b) return;
+  if (b.dataset.set !== undefined) { st.set[b.dataset.set] = b.dataset.v; saveSet(); syncSet(); if (st.res) { dnReset(); reanalyze(); } return; }
   if (b.dataset.qwas !== undefined) { b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); st.was = +b.dataset.qwas; renderQSpec(); return; }
   if (b.dataset.lang !== undefined) { st.lang = b.dataset.lang; try { localStorage.setItem('fint.lang', st.lang); } catch (e) {  } applyLang(); return; }
   if (b.dataset.act === 'closedrawers') { drawer(null); return; }
+  if (b.dataset.act === 'donor' && st.res) { const l = st.res.letters.find(x => x.ch === st.sel); if (st.dn.on) dnReset(); else { dnReset(true); if (l && l.pieces.length === 1) dnPart(0); } renderInsp(); return; }
+  if (b.dataset.act === 'undonor') { delete st.donor[st.sel]; dnReset(true); reanalyze(); return; }
+  if (b.dataset.part !== undefined) { if (!st.dn.on || !b.closest('#insp')) return; dnPart(+b.dataset.part); renderInsp(); return; }
+  if (b.dataset.donor !== undefined) { const l = st.res.letters.find(x => x.ch === st.sel); if (!l || st.dn.part === null) return; st.dn.src = b.dataset.donor; st.dn.tries = st.res.donorTry(l.ch, st.dn.part, st.dn.src, l.alt); renderInsp(); return; }
+  if (b.dataset.try !== undefined) {
+    const l = st.res.letters.find(x => x.ch === st.sel); if (!l || st.dn.part === null || !st.dn.src) return;
+    const d = st.donor[l.ch] || (st.donor[l.ch] = { alt: l.alt || 0, parts: {} }); d.parts[st.dn.part] = { src: st.dn.src, k: +b.dataset.try };
+    const ms = reanalyze(); say(`${l.ch}: донор ${st.dn.src}, шрифт пересобран за ${ms} мс`); return;
+  }
   if (b.dataset.act === 'rail') { drawer('rail'); return; }
   if (b.dataset.qsize !== undefined) { b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); st.qsize = +b.dataset.qsize; renderQSpec(); return; }
   if (b.dataset.act === 'tolab') { const ch = st.sel; drawer(null); st.view = 'lab'; applyView(); const card = ch && document.getElementById('g-' + hex(ch.codePointAt(0))); if (card) { card.scrollIntoView({ block: 'center' }); card.classList.add('flash'); setTimeout(() => card.classList.remove('flash'), 1400); } return; }
@@ -3501,6 +3679,7 @@ document.addEventListener('click', e => {
   if (b.dataset.var !== undefined) {
     const ch = b.dataset.var, i = +b.dataset.i;
     if (i) st.pick[ch] = i; else delete st.pick[ch];
+    delete st.donor[ch]; dnReset();
     st.open = ch; st.sel = st.view === 'quick' ? ch : st.sel; const ms = reanalyze();
     say(`${ch}: рецепт «${(st.res.letters.find(l => l.ch === ch) || {}).recipe}», шрифт пересобран за ${ms} мс`); return;
   }
@@ -3535,7 +3714,7 @@ $('#qLine').addEventListener('input', () => { st.sample = $('#qLine').textConten
 $('#qLine').addEventListener('focus', () => { $('#qLine').textContent = st.sample; });
 $('#qLine').addEventListener('blur', () => { st.sample = $('#qLine').textContent.trim() || 'Їжак і ґава їдуть до Європи'; renderQSpec(); });
 $('#qLine').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); $('#qLine').blur(); } });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') drawer(null); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { drawer(null); if (st.dn.on) { dnReset(); renderInsp(); } } });
 $('#setSuffix').addEventListener('input', () => { st.set.suffix = $('#setSuffix').value.replace(/[^\w .-]+/g, '').trim().slice(0, 12); saveSet(); });
 document.addEventListener('dragover', e => { e.preventDefault(); document.body.classList.add('drop'); });
 document.addEventListener('dragleave', e => { if (!e.relatedTarget) document.body.classList.remove('drop'); });
